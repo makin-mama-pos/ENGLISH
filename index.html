@@ -213,6 +213,18 @@
   .week-sentence{font-size:0.82rem;color:var(--ink-soft);font-style:italic;margin:8px 0;padding:8px 12px;background:var(--brass-soft);border-radius:6px;}
   .speak-btn{background:none;border:none;padding:2px 5px;font-size:0.88rem;line-height:1;border-radius:5px;vertical-align:middle;margin-left:4px;flex-shrink:0;color:var(--brass-deep);}
   .speak-btn:hover{background:var(--brass-soft);}
+  .say-along{display:inline-flex;align-items:center;gap:4px;flex-wrap:wrap;max-width:100%;}
+  .mic-btn{background:none;border:none;padding:2px 5px;font-size:0.88rem;line-height:1;border-radius:5px;vertical-align:middle;flex-shrink:0;color:var(--seal);}
+  .mic-btn:hover{background:var(--seal-soft);}
+  .mic-btn.listening{animation:mic-pulse 1s infinite;}
+  @keyframes mic-pulse{0%,100%{opacity:1;}50%{opacity:0.35;}}
+  .say-result{font-size:0.74rem;padding:2px 8px;border-radius:10px;display:none;word-break:break-word;}
+  .say-result:not(:empty){display:block;width:100%;margin-top:2px;}
+  .say-result.listening{color:var(--slate);background:var(--line);}
+  .say-result.good{color:var(--brass-deep);background:var(--brass-soft);}
+  .say-result.bad{color:var(--seal);background:var(--seal-soft);}
+  .vocab-item.vocab-row{flex-wrap:wrap;}
+  .week-sentence-row{flex-wrap:wrap;}
   .vocab-row{display:flex;align-items:center;justify-content:space-between;gap:6px;}
   .week-sentence-row{display:flex;align-items:center;justify-content:space-between;gap:8px;}
   .quiz-history{border:1px solid var(--line);border-radius:6px;overflow:hidden;}
@@ -798,12 +810,14 @@ function render(){
     const retryBtn = document.getElementById('retry-load-btn');
     if(retryBtn) retryBtn.onclick = loadProgress;
     bindSpeakButtons();
+    bindMicButtons();
     return;
   }
 
   if(viewMode==='quiz'){
     bindQuizSection();
     bindSpeakButtons();
+    bindMicButtons();
     return;
   }
 
@@ -872,6 +886,7 @@ function render(){
   });
 
   bindSpeakButtons();
+  bindMicButtons();
 }
 
 function speakText(text){
@@ -893,6 +908,55 @@ function speakBtnHtml(text){
   return `<button class="speak-btn" data-text="${escapeHtml(text)}" title="ฟังการออกเสียง" aria-label="ฟังการออกเสียง ${escapeHtml(text)}">🔊</button>`;
 }
 
+// ---- "พูดตาม" — ฟังเสียงผู้เรียนผ่านไมค์ และเทียบกับคำ/ประโยคเป้าหมาย ----
+function normalizeSpeech(s){
+  return s.trim().toLowerCase().replace(/[.,!?;:"']/g,'').replace(/\s+/g,' ');
+}
+function speakAlongBtnHtml(text){
+  return `<span class="say-along" data-target="${escapeHtml(text)}"><button class="mic-btn" title="พูดตาม (ต้องอนุญาตใช้ไมค์)">🎤</button><span class="say-result"></span></span>`;
+}
+function bindMicButtons(){
+  document.querySelectorAll('.mic-btn').forEach(btn=>{
+    btn.onclick = (e)=>{ e.stopPropagation(); startSpeechCheck(btn); };
+  });
+}
+function startSpeechCheck(btn){
+  const wrap = btn.closest('.say-along');
+  const target = wrap.dataset.target;
+  const resultEl = wrap.querySelector('.say-result');
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR){
+    resultEl.textContent = 'เบราว์เซอร์นี้ยังไม่รองรับการฟังเสียง (แนะนำ Chrome บนคอมพิวเตอร์หรือ Android)';
+    resultEl.className = 'say-result bad';
+    return;
+  }
+  if(btn.classList.contains('listening')) return; // กำลังฟังอยู่แล้ว ไม่เริ่มซ้ำ
+  const recognition = new SR();
+  recognition.lang = 'en-US';
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+  btn.classList.add('listening');
+  resultEl.textContent = '🎙 กำลังฟัง… พูดได้เลย';
+  resultEl.className = 'say-result listening';
+  recognition.onresult = (event)=>{
+    const heard = event.results[0][0].transcript;
+    if(normalizeSpeech(heard) === normalizeSpeech(target)){
+      resultEl.textContent = `✓ ถูกต้อง! ("${heard}")`;
+      resultEl.className = 'say-result good';
+    } else {
+      resultEl.textContent = `✗ ได้ยินว่า "${heard}" — เป้าหมายคือ "${target}"`;
+      resultEl.className = 'say-result bad';
+    }
+  };
+  recognition.onerror = ()=>{
+    resultEl.textContent = 'ไม่ได้ยินเสียง หรือยังไม่อนุญาตให้ใช้ไมค์ — ลองใหม่อีกครั้ง';
+    resultEl.className = 'say-result bad';
+  };
+  recognition.onend = ()=>{ btn.classList.remove('listening'); };
+  try{ recognition.start(); }
+  catch(e){ resultEl.textContent = 'เกิดข้อผิดพลาด ลองใหม่อีกครั้ง'; resultEl.className='say-result bad'; btn.classList.remove('listening'); }
+}
+
 function weekBlockHtml(w){
   const [num,phaseId,title,vocab,output,sentence] = w;
   const done = isWeekDone(studentName, num);
@@ -905,8 +969,8 @@ function weekBlockHtml(w){
       <div class="week-title"><span class="num nums">${String(num).padStart(2,'0')}</span>${escapeHtml(title)}</div>
       <div class="week-output">Output: ${escapeHtml(output)}</div>
       ${done && row ? `<div class="week-done-note">✓ ทำเสร็จเมื่อ ${new Date(row.timestamp).toLocaleDateString('th-TH',{day:'numeric',month:'short',year:'2-digit'})}</div>` : ''}
-      ${sentence ? `<div class="week-sentence week-sentence-row"><span>"${escapeHtml(sentence)}"</span>${speakBtnHtml(sentence)}</div>` : ''}
-      ${vocab ? `<div class="grid">${vocab.map(v=>`<div class="vocab-item vocab-row"><span><b>${escapeHtml(v[0])}</b> — ${escapeHtml(v[1])}</span>${speakBtnHtml(v[0])}</div>`).join('')}</div>` : ''}
+      ${sentence ? `<div class="week-sentence week-sentence-row"><span>"${escapeHtml(sentence)}"</span><span>${speakBtnHtml(sentence)}${speakAlongBtnHtml(sentence)}</span></div>` : ''}
+      ${vocab ? `<div class="grid">${vocab.map(v=>`<div class="vocab-item vocab-row"><span><b>${escapeHtml(v[0])}</b> — ${escapeHtml(v[1])}</span><span>${speakBtnHtml(v[0])}${speakAlongBtnHtml(v[0])}</span></div>`).join('')}</div>` : ''}
     </div>
   </div>`;
 }
