@@ -9,60 +9,135 @@
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#16213e; --ink-soft:#2c3a5e;
-    --paper:#faf9f6; --paper-raised:#ffffff;
-    --line:#e3e1da;
-    --gold:#96751f; --gold-soft:#f1e8d4;
+    --ink:#141a30; --ink-soft:#2b3358;
+    --paper:#f6f3ea; --paper-raised:#ffffff;
+    --line:#e0dbc9;
+    --brass:#96751f; --brass-soft:#f1e8d4; --brass-deep:#6e5720;
+    --seal:#7c3131; --seal-soft:#f4e3e0;
     --slate:#5b6472; --slate-light:#8890a0;
-    --good:#2f6844; --good-soft:#e5f0e7;
     --font-serif:'Source Serif 4', Georgia, 'Times New Roman', serif;
     --font-sans:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --radius:10px;
+    --font-mono:'Source Serif 4', Georgia, serif;
   }
   @media (prefers-color-scheme: dark){
     :root{
       --ink:#eef0f6; --ink-soft:#c7cde0;
-      --paper:#12162a; --paper-raised:#1b2140;
+      --paper:#0f1224; --paper-raised:#171b34;
       --line:#2c3356;
-      --gold:#d9b96a; --gold-soft:#332a13;
+      --brass:#d9b96a; --brass-soft:#332a13; --brass-deep:#e8cc8f;
+      --seal:#d97c7c; --seal-soft:#301a1a;
       --slate:#a3aac2; --slate-light:#7a81a0;
-      --good:#7fd39c; --good-soft:#173324;
     }
   }
   *{box-sizing:border-box;}
   body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-sans);min-height:100vh;}
   h1,h2,h3,.serif{font-family:var(--font-serif);font-weight:600;letter-spacing:-0.01em;}
   button{font-family:var(--font-sans);cursor:pointer;}
-  #app{max-width:980px;margin:0 auto;padding:0 20px 90px;}
-  .hero{padding:48px 0 30px;border-bottom:1px solid var(--line);margin-bottom:30px;}
-  .hero .mark{font-family:var(--font-serif);font-size:1.5rem;font-weight:700;display:block;margin-bottom:6px;}
-  .hero h1{font-size:2rem;margin:6px 0 10px;}
-  .hero p{color:var(--slate);max-width:560px;line-height:1.65;margin:0;}
-  .stats{display:flex;gap:26px;flex-wrap:wrap;margin-top:22px;}
-  .stat{font-size:0.85rem;color:var(--slate);}
-  .stat b{display:block;font-family:var(--font-serif);font-size:1.4rem;color:var(--ink);font-weight:600;}
-  input[type=text]{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:8px;font-family:var(--font-sans);font-size:0.95rem;background:var(--paper-raised);color:var(--ink);}
-  input[type=text]:focus{outline:2px solid var(--gold);outline-offset:1px;}
-  .timeline{display:flex;flex-direction:column;margin:26px 0 40px;}
-  .phase-row{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);}
-  .phase-num{font-family:var(--font-serif);font-size:1.2rem;color:var(--gold);font-weight:700;width:28px;flex-shrink:0;}
+  #app{max-width:960px;margin:0 auto;padding:28px 20px 90px;}
+  .nums{font-variant-numeric:tabular-nums;}
+
+  /* ---- Hero: styled as the cover plate of an issued credential ---- */
+  .cover{background:var(--ink);color:var(--paper);border-radius:4px;padding:38px 34px 28px;position:relative;overflow:hidden;}
+  .cover::before{content:'';position:absolute;inset:8px;border:1px solid rgba(212,184,122,0.35);border-radius:2px;pointer-events:none;}
+  .cover .crest{width:46px;height:46px;border:1.5px solid var(--brass);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-weight:700;font-size:1.05rem;color:var(--brass);flex-shrink:0;}
+  .cover-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;}
+  .cover .mark{font-family:var(--font-serif);font-size:0.82rem;letter-spacing:0.06em;color:var(--brass);display:block;}
+  .cover h1{font-size:1.9rem;margin:8px 0 12px;color:var(--paper);line-height:1.25;}
+  .cover p{color:#c7cde0;max-width:540px;line-height:1.7;margin:0;font-size:0.95rem;}
+  .cover-meta{display:flex;gap:0;flex-wrap:wrap;margin-top:26px;padding-top:18px;border-top:1px solid rgba(212,184,122,0.3);}
+  .cover-meta .field{padding:0 22px 0 0;margin-right:22px;border-right:1px solid rgba(212,184,122,0.25);}
+  .cover-meta .field:last-child{border-right:none;}
+  .cover-meta .field b{display:block;font-family:var(--font-serif);font-size:1.15rem;color:var(--paper);}
+  .cover-meta .field span{font-size:0.72rem;color:#8890a0;letter-spacing:0.03em;}
+  @media(max-width:600px){.cover{padding:28px 20px 22px;} .cover-meta .field{padding-right:14px;margin-right:14px;}}
+
+  /* ---- Level stamp trail ---- */
+  .stamptrail{display:flex;align-items:center;gap:0;margin:26px 0 6px;overflow-x:auto;padding-bottom:4px;}
+  .stamp{display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
+  .stamp .dot{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--brass);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-weight:700;font-size:0.78rem;color:var(--brass-deep);background:var(--brass-soft);}
+  .stamp .dot.origin{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+  .stamp .lvl{font-size:0.68rem;color:var(--slate);margin-top:5px;}
+  .stamp-link{width:26px;height:1.5px;background:var(--line);flex-shrink:0;}
+  .stamp-link.active{background:var(--brass);}
+
+  .timeline{display:flex;flex-direction:column;margin:8px 0 44px;position:relative;}
+  .timeline::before{content:'';position:absolute;left:15px;top:6px;bottom:6px;width:1px;background:var(--line);}
+  .phase-row{display:flex;gap:18px;padding:18px 0;position:relative;}
+  .phase-num{font-family:var(--font-serif);font-size:0.82rem;font-weight:700;width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--paper-raised);border:1px solid var(--line);color:var(--slate);z-index:1;}
+  .phase-row.current .phase-num{border-color:var(--seal);color:var(--seal);background:var(--seal-soft);}
   .phase-title{font-weight:600;font-size:1rem;}
   .phase-range{font-size:0.8rem;color:var(--slate);margin-top:2px;}
   .phase-focus{font-size:0.83rem;color:var(--slate);margin-top:6px;line-height:1.6;}
-  .card{background:var(--paper-raised);border:1px solid var(--line);border-radius:var(--radius);padding:0;overflow:hidden;margin-bottom:12px;}
-  .month-header{cursor:pointer;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;}
-  .month-header:hover{background:var(--gold-soft);}
-  .month-header .mh-title{font-family:var(--font-serif);font-size:1.05rem;font-weight:600;}
-  .month-header .mh-sub{color:var(--slate);font-size:0.85rem;margin-left:8px;}
-  .month-body{padding:0 20px 18px;}
+  .phase-focus span{display:inline-block;padding-right:14px;position:relative;}
+  .phase-focus span:not(:last-child)::after{content:'';position:absolute;right:6px;top:8px;width:3px;height:3px;border-radius:50%;background:var(--line);}
+
+  /* ---- Search ---- */
+  .search-wrap{position:relative;margin-bottom:14px;}
+  input[type=text]{width:100%;padding:13px 14px 13px 38px;border:1px solid var(--line);border-radius:6px;font-family:var(--font-sans);font-size:0.95rem;background:var(--paper-raised);color:var(--ink);}
+  input[type=text]:focus{outline:2px solid var(--brass);outline-offset:1px;}
+  .search-wrap svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--slate-light);pointer-events:none;}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px;}
+  .chip{font-size:0.78rem;padding:6px 12px;border:1px solid var(--line);border-radius:20px;background:var(--paper-raised);color:var(--slate);}
+  .chip:hover{border-color:var(--brass);color:var(--brass-deep);}
+
+  /* ---- Month entries: ledger rows, not uniform SaaS cards ---- */
+  .card{background:var(--paper-raised);border:1px solid var(--line);border-left:2px solid var(--line);border-radius:2px;padding:0;overflow:hidden;margin-bottom:10px;transition:border-left-color .15s;}
+  .card.open{border-left-color:var(--brass);}
+  .month-header{cursor:pointer;padding:15px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;}
+  .month-header:hover .mh-title{color:var(--brass-deep);}
+  .month-header .mh-left{display:flex;align-items:baseline;gap:12px;}
+  .month-header .mh-num{font-family:var(--font-serif);font-size:0.78rem;color:var(--slate-light);width:20px;}
+  .month-header .mh-title{font-family:var(--font-serif);font-size:1.02rem;font-weight:600;}
+  .month-header .mh-sub{color:var(--slate);font-size:0.83rem;}
+  .month-header .mh-toggle{color:var(--slate-light);font-size:0.75rem;flex-shrink:0;}
+  .month-body{padding:0 18px 16px 18px;}
   .week-block{border-top:1px solid var(--line);padding:14px 0;}
   .week-title{font-weight:600;font-size:0.93rem;}
+  .week-title .num{color:var(--brass-deep);font-family:var(--font-serif);margin-right:6px;}
   .week-output{font-size:0.83rem;color:var(--slate);margin:4px 0 8px;}
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:0;}
   @media(max-width:600px){.grid{grid-template-columns:1fr;}}
   .vocab-item{font-size:0.83rem;padding:4px 10px 4px 0;border-bottom:1px solid var(--line);}
-  .empty{color:var(--slate-light);font-size:0.88rem;padding:40px 0;text-align:center;}
+
+  /* ---- Empty state: guides the next action instead of sitting flat ---- */
+  .empty{text-align:center;padding:50px 20px;}
+  .empty .empty-icon{color:var(--slate-light);margin-bottom:12px;}
+  .empty .empty-title{font-family:var(--font-serif);font-size:1.05rem;margin-bottom:6px;}
+  .empty .empty-sub{color:var(--slate);font-size:0.88rem;margin-bottom:18px;}
+  .empty .chips{justify-content:center;}
+
   footer{color:var(--slate-light);font-size:0.78rem;text-align:center;padding:30px 0 10px;}
+
+  /* ---- Monitoring: identity bar, checkboxes, progress, teacher view ---- */
+  .idbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:18px 0 8px;padding:10px 14px;background:var(--paper-raised);border:1px solid var(--line);border-radius:6px;font-size:0.85rem;}
+  .idbar .who{color:var(--slate);}
+  .idbar .who b{color:var(--ink);font-weight:600;}
+  .idbar .who button{background:none;border:none;color:var(--brass-deep);font-size:0.8rem;padding:0;margin-left:8px;text-decoration:underline;}
+  .idbar .switch{background:var(--ink);color:var(--paper);border:none;border-radius:5px;padding:7px 14px;font-size:0.82rem;font-weight:600;}
+  .idbar .switch:hover{background:var(--ink-soft);}
+  .setup-banner{background:var(--seal-soft);border:1px solid var(--seal);border-radius:6px;padding:12px 16px;font-size:0.82rem;color:var(--ink);margin:0 0 16px;line-height:1.6;}
+  .setup-banner b{color:var(--seal);}
+
+  .mh-progress{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+  .mh-progress .bar{width:44px;height:5px;border-radius:3px;background:var(--line);overflow:hidden;}
+  .mh-progress .bar > span{display:block;height:100%;background:var(--brass);}
+  .mh-progress .frac{font-size:0.72rem;color:var(--slate);}
+
+  .week-block{display:flex;gap:12px;align-items:flex-start;}
+  .week-check{flex-shrink:0;margin-top:2px;width:18px;height:18px;border:1.5px solid var(--line);border-radius:4px;background:var(--paper-raised);cursor:pointer;display:flex;align-items:center;justify-content:center;color:transparent;}
+  .week-check.done{background:var(--brass);border-color:var(--brass);color:var(--ink);}
+  .week-check svg{width:12px;height:12px;}
+  .week-main{flex:1;min-width:0;}
+
+  .teacher-toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+  .teacher-toolbar h2{margin:0;}
+  .student-row{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid var(--line);border-radius:6px;background:var(--paper-raised);margin-bottom:8px;}
+  .student-row .name{font-weight:600;width:150px;flex-shrink:0;}
+  .student-row .bar-wrap{flex:1;height:8px;border-radius:4px;background:var(--line);overflow:hidden;}
+  .student-row .bar-wrap > span{display:block;height:100%;background:var(--brass);}
+  .student-row .count{width:70px;text-align:right;font-size:0.82rem;color:var(--slate);flex-shrink:0;}
+  .student-row .last{width:110px;text-align:right;font-size:0.74rem;color:var(--slate-light);flex-shrink:0;}
+  .loading-note{color:var(--slate);font-size:0.85rem;padding:20px 0;text-align:center;}
 </style>
 </head>
 <body>
@@ -268,6 +343,80 @@ const app = document.getElementById('app');
 let search = '';
 let openMonth = null;
 
+// ---------- Monitoring: Google Sheet backend ----------
+// วาง URL ของ Apps Script Web App ที่ deploy แล้วตรงนี้ (ดูวิธีตั้งค่าในไฟล์ Code.gs ที่แนบมาด้วย)
+const SHEET_API_URL = '';
+
+let studentName = null;
+let viewMode = 'course'; // 'course' | 'teacher'
+let progressLog = [];    // [{timestamp, student, week, phase, status}]
+let logLoaded = false;
+let logError = false;
+
+function getStudentName(){
+  const params = new URLSearchParams(location.search);
+  let name = params.get('student');
+  if(!name){
+    name = (prompt('กรุณาใส่ชื่อผู้เรียน (ใช้สำหรับบันทึกความคืบหน้า)') || '').trim();
+    if(!name) name = 'ผู้เรียนไม่ระบุชื่อ';
+    params.set('student', name);
+    history.replaceState(null, '', location.pathname + '?' + params.toString());
+  }
+  return name;
+}
+
+function renameStudent(){
+  const name = (prompt('เปลี่ยนชื่อผู้เรียน', studentName) || '').trim();
+  if(!name) return;
+  studentName = name;
+  const params = new URLSearchParams(location.search);
+  params.set('student', name);
+  history.replaceState(null, '', location.pathname + '?' + params.toString());
+  loadProgress();
+}
+
+async function loadProgress(){
+  logLoaded = false; logError = false; render();
+  if(!SHEET_API_URL){ logLoaded = true; render(); return; }
+  try{
+    const res = await fetch(SHEET_API_URL + '?action=list');
+    const json = await res.json();
+    progressLog = json.data || [];
+  }catch(err){
+    logError = true;
+  }
+  logLoaded = true;
+  render();
+}
+
+function latestStatusMap(){
+  const map = new Map();
+  progressLog.forEach(row=>{
+    const key = row.student + '|' + row.week;
+    const prev = map.get(key);
+    if(!prev || new Date(row.timestamp) >= new Date(prev.timestamp)) map.set(key, row);
+  });
+  return map;
+}
+
+function isWeekDone(student, week){
+  const row = latestStatusMap().get(student + '|' + week);
+  return !!row && row.status === 'done';
+}
+
+function toggleWeek(num, phaseId, nextDone){
+  const entry = { timestamp: new Date().toISOString(), student: studentName, week: num, phase: phaseId, status: nextDone ? 'done' : 'not_done' };
+  progressLog.push(entry);
+  render();
+  if(!SHEET_API_URL) return; // ยังไม่เชื่อมต่อชีต — เก็บไว้ในหน่วยความจำของหน้านี้เท่านั้น
+  fetch(SHEET_API_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(entry)
+  }).catch(()=>{});
+}
+
 function totalVocabCount(){
   return WEEKS.reduce((sum,w)=> sum + (w[3] ? w[3].length : 0), 0);
 }
@@ -287,34 +436,70 @@ function render(){
   filteredWeeks.forEach(w=>{ const m = Math.ceil(w[0]/4); (months[m]=months[m]||[]).push(w); });
   const monthKeys = Object.keys(months).map(Number).sort((a,b)=>a-b);
 
+  const LEVELS = ['A0','A1','A2','B1','B2','C1'];
+  const currentPhaseId = 'p1'; // เฟสที่กำลังเรียนอยู่ — ปรับตามผู้เรียนจริงภายหลัง
+
   app.innerHTML = `
-    <div class="hero">
-      <span class="mark">Executive English</span>
-      <h1>หลักสูตรภาษาอังกฤษผู้บริหาร 24 เดือน</h1>
-      <p>เส้นทางจากศูนย์ (A0) สู่ระดับ C1 — 5 ช่วง, 24 เดือน, 96 สัปดาห์ พร้อมคำศัพท์และสำนวนกว่า ${totalVocabCount().toLocaleString()} รายการ</p>
-      <div class="stats">
-        <div class="stat"><b>5</b>ช่วงหลักสูตร (Phase)</div>
-        <div class="stat"><b>24</b>เดือน</div>
-        <div class="stat"><b>96</b>สัปดาห์</div>
-        <div class="stat"><b>${totalVocabCount().toLocaleString()}+</b>คำศัพท์/สำนวน</div>
+    <div class="cover">
+      <div class="cover-top">
+        <div>
+          <span class="mark">EXECUTIVE ENGLISH · หลักสูตร 24 เดือน</span>
+          <h1>เส้นทางภาษาอังกฤษผู้บริหาร<br>จาก A0 สู่ C1</h1>
+          <p>5 ช่วงการเรียนรู้ ครอบคลุม 96 สัปดาห์ ออกแบบเฉพาะสำหรับการสื่อสารทางธุรกิจระดับบริหาร ตั้งแต่ปูพื้นฐานจนถึงความคล่องแคล่วแบบเจ้าของภาษา</p>
+        </div>
+        <div class="crest">EE</div>
+      </div>
+      <div class="cover-meta">
+        <div class="field"><b class="nums">5</b><span>ช่วงหลักสูตร</span></div>
+        <div class="field"><b class="nums">24</b><span>เดือน</span></div>
+        <div class="field"><b class="nums">96</b><span>สัปดาห์</span></div>
+        <div class="field"><b class="nums">${totalVocabCount().toLocaleString()}+</b><span>คำศัพท์/สำนวน</span></div>
       </div>
     </div>
 
+    <div class="idbar">
+      <div class="who">ผู้เรียน: <b>${escapeHtml(studentName)}</b><button id="rename-btn">เปลี่ยนชื่อ</button></div>
+      <button class="switch" id="view-toggle">${viewMode==='teacher' ? '← กลับไปหน้าเรียน' : 'มุมมองครู (ดูภาพรวมทุกคน)'}</button>
+    </div>
+    ${!SHEET_API_URL ? `<div class="setup-banner"><b>ยังไม่ได้เชื่อมต่อ Google Sheet</b> — ความคืบหน้าที่ติ๊กไว้จะถูกเก็บชั่วคราวในหน้านี้เท่านั้น และหายเมื่อรีเฟรช ดูวิธีเชื่อมต่อในไฟล์ Code.gs ที่แนบมาให้</div>` : ''}
+
+    ${viewMode==='teacher' ? `
+      <h2 class="serif" style="font-size:1.25rem;margin-bottom:14px;">ภาพรวมความคืบหน้าผู้เรียนทุกคน</h2>
+      <div id="teacher-container">${teacherDashboardHtml()}</div>
+      <footer>Executive English Academy — หลักสูตรฉบับเต็ม</footer>
+    ` : `
+    <div class="stamptrail">
+      ${LEVELS.map((lv,i)=>{
+        const reached = i===0; // เริ่มที่ A0 เสมอ ปรับตามความคืบหน้าจริงของผู้เรียนได้
+        return `${i>0?`<div class="stamp-link${reached?' active':''}"></div>`:''}<div class="stamp"><div class="dot${i===0?' origin':''}">${lv}</div><div class="lvl">${i===0?'เริ่มต้น':'เป้าหมาย'}</div></div>`;
+      }).join('')}
+    </div>
+
     <div class="timeline">
-      ${PHASES.map(p=>`<div class="phase-row">
-        <div class="phase-num">${p.num}</div>
+      ${PHASES.map(p=>`<div class="phase-row${p.id===currentPhaseId?' current':''}">
+        <div class="phase-num nums">${p.num}</div>
         <div>
           <div class="phase-title">${escapeHtml(p.title)} <span style="color:var(--slate);font-weight:400;font-size:0.82rem;">· ${escapeHtml(p.range)} · ${escapeHtml(p.level)}</span></div>
-          <div class="phase-focus">${p.focus.map(escapeHtml).join(' · ')}</div>
+          <div class="phase-focus">${p.focus.map(f=>`<span>${escapeHtml(f)}</span>`).join('')}</div>
         </div>
       </div>`).join('')}
     </div>
 
     <h2 class="serif" style="font-size:1.25rem;margin-bottom:14px;">เนื้อหารายสัปดาห์ทั้งหมด</h2>
-    <input type="text" id="search-input" placeholder="ค้นหา เช่น negotiate, ประชุม, feedback..." value="${escapeHtml(search)}" style="margin-bottom:22px;">
+    <div class="search-wrap">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" id="search-input" placeholder="ค้นหา เช่น negotiate, ประชุม, feedback..." value="${escapeHtml(search)}">
+    </div>
     <div id="months-container"></div>
     <footer>Executive English Academy — หลักสูตรฉบับเต็ม</footer>
+    `}
   `;
+
+  document.getElementById('rename-btn').onclick = renameStudent;
+  document.getElementById('view-toggle').onclick = ()=>{ viewMode = viewMode==='teacher' ? 'course' : 'teacher'; render(); };
+
+  if(viewMode==='teacher') return;
+
 
   const input = document.getElementById('search-input');
   input.oninput = (e)=>{
@@ -328,16 +513,34 @@ function render(){
   };
 
   const container = document.getElementById('months-container');
-  if(monthKeys.length===0){ container.innerHTML = '<div class="empty">ไม่พบผลลัพธ์ที่ตรงกับคำค้นหา</div>'; return; }
+  if(monthKeys.length===0){
+    const suggestions = ['negotiate','ประชุม','feedback','leverage','C1'];
+    container.innerHTML = `<div class="empty">
+      <div class="empty-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></div>
+      <div class="empty-title">ไม่พบ "${escapeHtml(search.trim())}" ในหลักสูตร</div>
+      <div class="empty-sub">ลองคำอื่น หรือเลือกจากคำที่ใช้บ่อยด้านล่าง</div>
+      <div class="chips">${suggestions.map(s=>`<span class="chip" data-suggest="${escapeHtml(s)}">${escapeHtml(s)}</span>`).join('')}<span class="chip" data-suggest="">ล้างการค้นหา</span></div>
+    </div>`;
+    container.querySelectorAll('[data-suggest]').forEach(c=>{
+      c.onclick = ()=>{ search = c.dataset.suggest; openMonth = search? '__all__' : null; render(); };
+    });
+    return;
+  }
 
   container.innerHTML = monthKeys.map(m=>{
     const weeksInMonth = months[m];
     const ph = phaseById(weeksInMonth[0][1]);
     const isOpen = q ? true : (openMonth===m);
-    return `<div class="card">
+    const doneCount = weeksInMonth.filter(w=>isWeekDone(studentName, w[0])).length;
+    const pct = Math.round(doneCount/weeksInMonth.length*100);
+    return `<div class="card${isOpen?' open':''}">
       <div class="month-header" data-month="${m}">
-        <div><span class="mh-title">เดือนที่ ${m}</span><span class="mh-sub">${escapeHtml(ph.title)} · ${escapeHtml(ph.level)}</span></div>
-        <span style="color:var(--slate);font-size:0.8rem;">${isOpen?'▲':'▼'}</span>
+        <div class="mh-left"><span class="mh-num nums">${String(m).padStart(2,'0')}</span><span class="mh-title">เดือนที่ ${m}</span><span class="mh-sub">${escapeHtml(ph.title)} · ${escapeHtml(ph.level)}</span></div>
+        <div class="mh-progress">
+          <div class="bar"><span style="width:${pct}%"></span></div>
+          <span class="frac nums">${doneCount}/${weeksInMonth.length}</span>
+          <span class="mh-toggle">${isOpen?'ซ่อน':'ดูสัปดาห์'}</span>
+        </div>
       </div>
       ${isOpen ? `<div class="month-body">${weeksInMonth.map(weekBlockHtml).join('')}</div>` : ''}
     </div>`;
@@ -350,18 +553,61 @@ function render(){
       render();
     };
   });
+
+  document.querySelectorAll('.week-check').forEach(el=>{
+    el.onclick = (e)=>{
+      e.stopPropagation();
+      const num = +el.dataset.week;
+      const phaseId = el.dataset.phase;
+      const nextDone = el.dataset.done !== 'true';
+      toggleWeek(num, phaseId, nextDone);
+    };
+  });
 }
 
 function weekBlockHtml(w){
   const [num,phaseId,title,vocab,output] = w;
+  const done = isWeekDone(studentName, num);
   return `<div class="week-block">
-    <div class="week-title">สัปดาห์ ${num} — ${escapeHtml(title)}</div>
-    <div class="week-output">Output: ${escapeHtml(output)}</div>
-    ${vocab ? `<div class="grid">${vocab.map(v=>`<div class="vocab-item"><b>${escapeHtml(v[0])}</b> — ${escapeHtml(v[1])}</div>`).join('')}</div>` : ''}
+    <div class="week-check${done?' done':''}" data-week="${num}" data-phase="${phaseId}" data-done="${done}" title="ทำเสร็จแล้ว">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+    </div>
+    <div class="week-main">
+      <div class="week-title"><span class="num nums">${String(num).padStart(2,'0')}</span>${escapeHtml(title)}</div>
+      <div class="week-output">Output: ${escapeHtml(output)}</div>
+      ${vocab ? `<div class="grid">${vocab.map(v=>`<div class="vocab-item"><b>${escapeHtml(v[0])}</b> — ${escapeHtml(v[1])}</div>`).join('')}</div>` : ''}
+    </div>
   </div>`;
 }
 
+function teacherDashboardHtml(){
+  if(!logLoaded) return `<div class="loading-note">กำลังโหลดข้อมูลความคืบหน้า...</div>`;
+  if(logError) return `<div class="loading-note">โหลดข้อมูลไม่สำเร็จ ลองรีเฟรชหน้าอีกครั้ง</div>`;
+  const map = latestStatusMap();
+  const students = new Map();
+  map.forEach(row=>{
+    if(row.status!=='done') return;
+    const s = students.get(row.student) || { done:new Set(), last:row.timestamp };
+    s.done.add(row.week);
+    if(new Date(row.timestamp) > new Date(s.last)) s.last = row.timestamp;
+    students.set(row.student, s);
+  });
+  const list = Array.from(students.entries()).sort((a,b)=> b[1].done.size - a[1].done.size);
+  if(list.length===0) return `<div class="loading-note">ยังไม่มีผู้เรียนติ๊กความคืบหน้าเข้ามาครับ</div>`;
+  return list.map(([name,s])=>{
+    const pct = Math.round(s.done.size/96*100);
+    return `<div class="student-row">
+      <div class="name">${escapeHtml(name)}</div>
+      <div class="bar-wrap"><span style="width:${pct}%"></span></div>
+      <div class="count nums">${s.done.size}/96</div>
+      <div class="last">${new Date(s.last).toLocaleDateString('th-TH',{day:'numeric',month:'short'})}</div>
+    </div>`;
+  }).join('');
+}
+
+studentName = getStudentName();
 render();
+loadProgress();
 </script>
 </body>
 </html>
