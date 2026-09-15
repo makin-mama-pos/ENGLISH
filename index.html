@@ -211,6 +211,12 @@
   .quiz-result .score-sub{color:var(--slate);font-size:0.9rem;margin-bottom:24px;}
   .quiz-empty{text-align:center;padding:40px 20px;color:var(--slate);}
   .week-sentence{font-size:0.82rem;color:var(--ink-soft);font-style:italic;margin:8px 0;padding:8px 12px;background:var(--brass-soft);border-radius:6px;}
+  .quiz-history{border:1px solid var(--line);border-radius:6px;overflow:hidden;}
+  .quiz-history-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;font-size:0.83rem;border-bottom:1px solid var(--line);background:var(--paper-raised);}
+  .quiz-history-row:last-child{border-bottom:none;}
+  .quiz-history-row .qh-type{color:var(--ink);}
+  .quiz-history-row .qh-score{color:var(--brass-deep);font-weight:600;}
+  .quiz-history-row .qh-date{color:var(--slate-light);font-size:0.76rem;}
 </style>
 </head>
 <body>
@@ -465,7 +471,7 @@ function renameStudent(){
 
 async function loadProgress(){
   logLoaded = false; logError = false; render();
-  if(!SHEET_API_URL){ logLoaded = true; render(); return; }
+  if(!SHEET_API_URL){ logLoaded = true; quizLogLoaded = true; render(); return; }
   try{
     const res = await fetch(SHEET_API_URL + '?action=list');
     const json = await res.json();
@@ -475,6 +481,41 @@ async function loadProgress(){
   }
   logLoaded = true;
   render();
+  loadQuizLog();
+}
+
+async function loadQuizLog(){
+  quizLogLoaded = false;
+  if(!SHEET_API_URL){ quizLogLoaded = true; render(); return; }
+  try{
+    const res = await fetch(SHEET_API_URL + '?action=quizlist');
+    const json = await res.json();
+    quizLog = json.data || [];
+  }catch(err){
+    // เงียบไว้ — ไม่บล็อกการใช้งานหน้าเรียนหลัก ถ้าดึงผลแบบทดสอบไม่สำเร็จ
+  }
+  quizLogLoaded = true;
+  render();
+}
+
+function postQuizResult(){
+  const entry = {
+    kind: 'quiz',
+    timestamp: new Date().toISOString(),
+    student: studentName,
+    quizType: quizType,
+    scope: quizScopePhase,
+    score: quizScore,
+    total: quizQuestions.length
+  };
+  quizLog.push(entry);
+  if(!SHEET_API_URL) return; // ยังไม่เชื่อมต่อชีต — เก็บไว้ในหน่วยความจำของหน้านี้เท่านั้น
+  fetch(SHEET_API_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(entry)
+  }).catch(()=>{});
 }
 
 function latestStatusMap(){
@@ -630,6 +671,7 @@ function nextQuizQuestion(){
     render();
   } else {
     quizStage = 'result';
+    postQuizResult();
     render();
   }
 }
@@ -834,9 +876,16 @@ function quizSectionHtml(){
   return quizResultHtml();
 }
 
+function quizTypeLabel(t){ return t==='mc' ? 'ปรนัย' : 'เติมคำ'; }
+function quizScopeLabel(scope){ return scope==='all' ? 'ทั้งหมด' : (phaseById(scope) ? 'ช่วงที่ '+phaseById(scope).num : scope); }
+function quizResultsFor(student){
+  return quizLog.filter(r=> r.student===student).sort((a,b)=> new Date(b.timestamp)-new Date(a.timestamp));
+}
+
 function quizSetupHtml(){
   const mcCount = vocabPoolForScope(quizScopePhase).length;
   const fillCount = fillPoolForScope(quizScopePhase).length;
+  const myResults = quizResultsFor(studentName).slice(0,5);
   return `
     <h2 class="serif" style="font-size:1.25rem;margin-bottom:6px;">แบบทดสอบความรู้</h2>
     <p style="color:var(--slate);font-size:0.88rem;margin:0 0 24px;">ทดสอบคำศัพท์ที่เรียนมาแล้ว เลือกรูปแบบและขอบเขตด้านล่าง</p>
@@ -864,6 +913,16 @@ function quizSetupHtml(){
       <button class="btn-primary" id="quiz-start-btn" ${(quizType==='mc'?mcCount<4:fillCount<1) ? 'disabled' : ''}>เริ่มทำแบบทดสอบ (${quizType==='mc'?Math.min(10,mcCount):Math.min(10,fillCount)} ข้อ)</button>
       ${(quizType==='mc'?mcCount<4:fillCount<1) ? `<p class="note" style="margin-top:10px;color:var(--slate-light);font-size:0.8rem;">คำศัพท์ในขอบเขตนี้ยังไม่พอสำหรับสร้างข้อสอบ ลองเลือกขอบเขตที่กว้างขึ้น</p>` : ''}
     </div>
+    ${quizLogLoaded && myResults.length>0 ? `
+      <h3 class="serif" style="font-size:1.02rem;margin:32px 0 10px;">ผลแบบทดสอบล่าสุดของคุณ</h3>
+      <div class="quiz-history">
+        ${myResults.map(r=>`<div class="quiz-history-row">
+          <span class="qh-type">${escapeHtml(quizTypeLabel(r.quizType))} · ${escapeHtml(quizScopeLabel(r.scope))}</span>
+          <span class="qh-score nums">${r.score}/${r.total}</span>
+          <span class="qh-date">${new Date(r.timestamp).toLocaleDateString('th-TH',{day:'numeric',month:'short'})}</span>
+        </div>`).join('')}
+      </div>
+    ` : ''}
   `;
 }
 
@@ -993,6 +1052,16 @@ function teacherDashboardHtml(){
       ${isOpen ? `<div class="student-detail">
         <div style="font-size:0.78rem;color:var(--slate);margin-bottom:2px;">สัปดาห์ที่ทำเสร็จแล้ว (${weekNums.length}):</div>
         ${weekNums.map(n=>`<span class="wk-chip">สัปดาห์ ${n}</span>`).join('')}
+        ${(()=>{ if(!quizLogLoaded) return `<div style="font-size:0.78rem;color:var(--slate-light);margin-top:14px;">กำลังโหลดผลแบบทดสอบ…</div>`; const qr = quizResultsFor(name).slice(0,5); return qr.length>0 ? `
+          <div style="font-size:0.78rem;color:var(--slate);margin:14px 0 2px;">ผลแบบทดสอบล่าสุด:</div>
+          <div class="quiz-history" style="margin-top:6px;">
+            ${qr.map(r=>`<div class="quiz-history-row">
+              <span class="qh-type">${escapeHtml(quizTypeLabel(r.quizType))} · ${escapeHtml(quizScopeLabel(r.scope))}</span>
+              <span class="qh-score nums">${r.score}/${r.total}</span>
+              <span class="qh-date">${new Date(r.timestamp).toLocaleDateString('th-TH',{day:'numeric',month:'short'})}</span>
+            </div>`).join('')}
+          </div>
+        ` : `<div style="font-size:0.78rem;color:var(--slate-light);margin-top:14px;">ยังไม่มีประวัติแบบทดสอบ</div>`; })()}
       </div>` : ''}
     </div>`;
   }).join('');
