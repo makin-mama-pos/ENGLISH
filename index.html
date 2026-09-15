@@ -429,9 +429,13 @@ let openMonth = null;
 // ---------- Monitoring: Google Sheet backend ----------
 // วาง URL ของ Apps Script Web App ที่ deploy แล้วตรงนี้ (ดูวิธีตั้งค่าในไฟล์ Code.gs ที่แนบมาด้วย)
 const SHEET_API_URL ='https://script.google.com/macros/s/AKfycbzIt-K4jxxla3GxL5epmt3wrKLk2iFEIAqUSR7MD-XIdUXRerq9EjObYW6SbcDIePXhKg/exec';
+// รหัสผ่านเข้ามุมมองครู — เปลี่ยนได้ตามต้องการ (นี่เป็นการกันแบบเบื้องต้นเท่านั้น ไม่ใช่ระบบความปลอดภัยจริง
+// เพราะโค้ดนี้อยู่ในไฟล์ HTML ที่ใครก็เปิดดูซอร์สได้ — เหมาะกับกันผู้เรียนกดพลาดเข้ามาดูเฉยๆ ไม่เหมาะกับข้อมูลที่ต้องปกปิดจริงจัง)
+const TEACHER_PIN = '1234';
 
 let studentName = null;
 let viewMode = 'course'; // 'course' | 'teacher' | 'quiz'
+let teacherUnlocked = false;
 let progressLog = [];    // [{timestamp, student, week, phase, status}]
 let logLoaded = false;
 let logError = false;
@@ -769,7 +773,18 @@ function render(){
 
   document.getElementById('rename-btn').onclick = renameStudent;
   document.querySelectorAll('.mode-tabs [data-mode]').forEach(b=>{
-    b.onclick = ()=>{ viewMode = b.dataset.mode; if(viewMode==='quiz') quizStage='setup'; render(); };
+    b.onclick = ()=>{
+      const target = b.dataset.mode;
+      if(target==='teacher' && !teacherUnlocked){
+        const entered = prompt('กรุณาใส่รหัสผ่านสำหรับครู/แอดมิน');
+        if(entered === null) return; // กดยกเลิก — ไม่ทำอะไร
+        if(entered !== TEACHER_PIN){ alert('รหัสผ่านไม่ถูกต้อง'); return; }
+        teacherUnlocked = true;
+      }
+      viewMode = target;
+      if(viewMode==='quiz') quizStage='setup';
+      render();
+    };
   });
 
   if(viewMode==='teacher'){
