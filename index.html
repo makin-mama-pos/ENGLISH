@@ -211,6 +211,10 @@
   .quiz-result .score-sub{color:var(--slate);font-size:0.9rem;margin-bottom:24px;}
   .quiz-empty{text-align:center;padding:40px 20px;color:var(--slate);}
   .week-sentence{font-size:0.82rem;color:var(--ink-soft);font-style:italic;margin:8px 0;padding:8px 12px;background:var(--brass-soft);border-radius:6px;}
+  .speak-btn{background:none;border:none;padding:2px 5px;font-size:0.88rem;line-height:1;border-radius:5px;vertical-align:middle;margin-left:4px;flex-shrink:0;color:var(--brass-deep);}
+  .speak-btn:hover{background:var(--brass-soft);}
+  .vocab-row{display:flex;align-items:center;justify-content:space-between;gap:6px;}
+  .week-sentence-row{display:flex;align-items:center;justify-content:space-between;gap:8px;}
   .quiz-history{border:1px solid var(--line);border-radius:6px;overflow:hidden;}
   .quiz-history-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;font-size:0.83rem;border-bottom:1px solid var(--line);background:var(--paper-raised);}
   .quiz-history-row:last-child{border-bottom:none;}
@@ -778,11 +782,13 @@ function render(){
     });
     const retryBtn = document.getElementById('retry-load-btn');
     if(retryBtn) retryBtn.onclick = loadProgress;
+    bindSpeakButtons();
     return;
   }
 
   if(viewMode==='quiz'){
     bindQuizSection();
+    bindSpeakButtons();
     return;
   }
 
@@ -849,6 +855,27 @@ function render(){
       toggleWeek(num, phaseId, nextDone);
     };
   });
+
+  bindSpeakButtons();
+}
+
+function speakText(text){
+  if(!('speechSynthesis' in window)){ return; }
+  try{
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-US';
+    u.rate = 0.9;
+    window.speechSynthesis.speak(u);
+  }catch(e){ /* เงียบไว้ — เบราว์เซอร์บางตัวไม่รองรับ */ }
+}
+function bindSpeakButtons(){
+  document.querySelectorAll('.speak-btn').forEach(b=>{
+    b.onclick = (e)=>{ e.stopPropagation(); speakText(b.dataset.text); };
+  });
+}
+function speakBtnHtml(text){
+  return `<button class="speak-btn" data-text="${escapeHtml(text)}" title="ฟังการออกเสียง" aria-label="ฟังการออกเสียง ${escapeHtml(text)}">🔊</button>`;
 }
 
 function weekBlockHtml(w){
@@ -863,8 +890,8 @@ function weekBlockHtml(w){
       <div class="week-title"><span class="num nums">${String(num).padStart(2,'0')}</span>${escapeHtml(title)}</div>
       <div class="week-output">Output: ${escapeHtml(output)}</div>
       ${done && row ? `<div class="week-done-note">✓ ทำเสร็จเมื่อ ${new Date(row.timestamp).toLocaleDateString('th-TH',{day:'numeric',month:'short',year:'2-digit'})}</div>` : ''}
-      ${sentence ? `<div class="week-sentence">“${escapeHtml(sentence)}”</div>` : ''}
-      ${vocab ? `<div class="grid">${vocab.map(v=>`<div class="vocab-item"><b>${escapeHtml(v[0])}</b> — ${escapeHtml(v[1])}</div>`).join('')}</div>` : ''}
+      ${sentence ? `<div class="week-sentence week-sentence-row"><span>"${escapeHtml(sentence)}"</span>${speakBtnHtml(sentence)}</div>` : ''}
+      ${vocab ? `<div class="grid">${vocab.map(v=>`<div class="vocab-item vocab-row"><span><b>${escapeHtml(v[0])}</b> — ${escapeHtml(v[1])}</span>${speakBtnHtml(v[0])}</div>`).join('')}</div>` : ''}
     </div>
   </div>`;
 }
@@ -926,6 +953,8 @@ function quizSetupHtml(){
   `;
 }
 
+function isEnglishText(s){ return /^[a-zA-Z0-9 .,'"?!\-]+$/.test(s.trim()); }
+
 function quizActiveHtml(){
   const q = quizQuestions[quizIndex];
   const dots = quizQuestions.map((_,i)=>{
@@ -933,6 +962,7 @@ function quizActiveHtml(){
     if(i < quizResultsLog.length) cls = quizResultsLog[i] ? 'filled' : 'wrong';
     return `<span class="${cls}"></span>`;
   }).join('');
+  const fillCorrect = q.type==='fill' && normalizeAnswer(quizFillValue)===normalizeAnswer(q.answer);
   return `
     <div class="quiz-progress">
       <span>ข้อ ${quizIndex+1} / ${quizQuestions.length} · คะแนน ${quizScore}</span>
@@ -941,7 +971,7 @@ function quizActiveHtml(){
     <div class="quiz-card">
       ${q.type==='mc' ? `
         <div class="quiz-prompt-label">${escapeHtml(q.promptLabel)}</div>
-        <div class="quiz-prompt">${escapeHtml(q.prompt)}</div>
+        <div class="quiz-prompt">${escapeHtml(q.prompt)}${isEnglishText(q.prompt)?speakBtnHtml(q.prompt):''}</div>
         <div class="quiz-options">
           ${q.options.map(opt=>{
             let cls = '';
@@ -960,11 +990,12 @@ function quizActiveHtml(){
           ${!quizAnswered ? `<button class="btn-primary" id="quiz-fill-submit">ตรวจคำตอบ</button>` : ''}
         </div>
       `}
-      ${quizAnswered ? `<div class="quiz-feedback ${(q.type==='mc' ? quizSelectedOpt===q.correctText : normalizeAnswer(quizFillValue)===normalizeAnswer(q.answer)) ? 'good' : 'bad'}">
-        ${(q.type==='mc' ? quizSelectedOpt===q.correctText : normalizeAnswer(quizFillValue)===normalizeAnswer(q.answer))
+      ${quizAnswered ? `<div class="quiz-feedback ${(q.type==='mc' ? quizSelectedOpt===q.correctText : fillCorrect) ? 'good' : 'bad'}">
+        ${(q.type==='mc' ? quizSelectedOpt===q.correctText : fillCorrect)
           ? '✓ ถูกต้อง!'
-          : `✗ ยังไม่ถูก — คำตอบที่ถูกคือ “${escapeHtml(q.type==='mc'?q.correctText:q.answer)}”`}
+          : `✗ ยังไม่ถูก — คำตอบที่ถูกคือ "${escapeHtml(q.type==='mc'?q.correctText:q.answer)}"`}
         ${q.type==='fill' && q.hintTh ? ` (${escapeHtml(q.hintTh)})` : ''}
+        ${q.type==='fill' ? speakBtnHtml(q.blanked.replace('_____', q.answer)) : ''}
       </div>` : ''}
       <div class="quiz-actions">
         ${quizAnswered ? `<button class="btn-primary" id="quiz-next-btn">${quizIndex<quizQuestions.length-1?'ข้อถัดไป':'ดูผลคะแนน'}</button>` : ''}
