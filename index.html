@@ -30,7 +30,7 @@
     }
   }
   *{box-sizing:border-box;}
-  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-sans);min-height:100vh;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-sans);min-height:100vh;font-size:17px;line-height:1.6;}
   h1,h2,h3,.serif{font-family:var(--font-serif);font-weight:600;letter-spacing:-0.01em;}
   button{font-family:var(--font-sans);cursor:pointer;}
   #app{max-width:960px;margin:0 auto;padding:28px 20px 90px;}
@@ -42,13 +42,13 @@
   .cover .crest{width:46px;height:46px;border:1.5px solid var(--brass);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-weight:700;font-size:1.05rem;color:var(--brass);flex-shrink:0;}
   .cover-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;}
   .cover .mark{font-family:var(--font-serif);font-size:0.82rem;letter-spacing:0.06em;color:var(--brass);display:block;}
-  .cover h1{font-size:1.9rem;margin:8px 0 12px;color:var(--paper);line-height:1.25;}
-  .cover p{color:#c7cde0;max-width:540px;line-height:1.7;margin:0;font-size:0.95rem;}
+  .cover h1{font-size:2.15rem;margin:8px 0 12px;color:var(--paper);line-height:1.3;}
+  .cover p{color:#c7cde0;max-width:540px;line-height:1.7;margin:0;font-size:1.05rem;}
   .cover-meta{display:flex;gap:0;flex-wrap:wrap;margin-top:26px;padding-top:18px;border-top:1px solid rgba(212,184,122,0.3);}
   .cover-meta .field{padding:0 22px 0 0;margin-right:22px;border-right:1px solid rgba(212,184,122,0.25);}
   .cover-meta .field:last-child{border-right:none;}
-  .cover-meta .field b{display:block;font-family:var(--font-serif);font-size:1.15rem;color:var(--paper);}
-  .cover-meta .field span{font-size:0.72rem;color:#8890a0;letter-spacing:0.03em;}
+  .cover-meta .field b{display:block;font-family:var(--font-serif);font-size:1.3rem;color:var(--paper);}
+  .cover-meta .field span{font-size:0.8rem;color:#8890a0;letter-spacing:0.03em;}
   @media(max-width:600px){.cover{padding:28px 20px 22px;} .cover-meta .field{padding-right:14px;margin-right:14px;}}
 
   /* ---- Level stamp trail ---- */
@@ -65,19 +65,19 @@
   .phase-row{display:flex;gap:18px;padding:18px 0;position:relative;}
   .phase-num{font-family:var(--font-serif);font-size:0.82rem;font-weight:700;width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--paper-raised);border:1px solid var(--line);color:var(--slate);z-index:1;}
   .phase-row.current .phase-num{border-color:var(--seal);color:var(--seal);background:var(--seal-soft);}
-  .phase-title{font-weight:600;font-size:1rem;}
-  .phase-range{font-size:0.8rem;color:var(--slate);margin-top:2px;}
-  .phase-focus{font-size:0.83rem;color:var(--slate);margin-top:6px;line-height:1.6;}
+  .phase-title{font-weight:600;font-size:1.15rem;}
+  .phase-range{font-size:0.9rem;color:var(--slate);margin-top:2px;}
+  .phase-focus{font-size:0.95rem;color:var(--slate);margin-top:6px;line-height:1.65;}
   .phase-focus span{display:inline-block;padding-right:14px;position:relative;}
   .phase-focus span:not(:last-child)::after{content:'';position:absolute;right:6px;top:8px;width:3px;height:3px;border-radius:50%;background:var(--line);}
 
   /* ---- Search ---- */
   .search-wrap{position:relative;margin-bottom:14px;}
-  input[type=text]{width:100%;padding:13px 14px 13px 38px;border:1px solid var(--line);border-radius:6px;font-family:var(--font-sans);font-size:0.95rem;background:var(--paper-raised);color:var(--ink);}
+  input[type=text]{width:100%;padding:14px 14px 14px 40px;border:1px solid var(--line);border-radius:6px;font-family:var(--font-sans);font-size:1.05rem;background:var(--paper-raised);color:var(--ink);}
   input[type=text]:focus{outline:2px solid var(--brass);outline-offset:1px;}
   .search-wrap svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--slate-light);pointer-events:none;}
   .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px;}
-  .chip{font-size:0.78rem;padding:6px 12px;border:1px solid var(--line);border-radius:20px;background:var(--paper-raised);color:var(--slate);}
+  .chip{font-size:0.88rem;padding:7px 14px;border:1px solid var(--line);border-radius:20px;background:var(--paper-raised);color:var(--slate);}
   .chip:hover{border-color:var(--brass);color:var(--brass-deep);}
 
   /* ---- Month entries: ledger rows, not uniform SaaS cards ---- */
@@ -86,30 +86,30 @@
   .month-header{cursor:pointer;padding:15px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;}
   .month-header:hover .mh-title{color:var(--brass-deep);}
   .month-header .mh-left{display:flex;align-items:baseline;gap:12px;}
-  .month-header .mh-num{font-family:var(--font-serif);font-size:0.78rem;color:var(--slate-light);width:20px;}
-  .month-header .mh-title{font-family:var(--font-serif);font-size:1.02rem;font-weight:600;}
-  .month-header .mh-sub{color:var(--slate);font-size:0.83rem;}
-  .month-header .mh-toggle{color:var(--slate-light);font-size:0.75rem;flex-shrink:0;}
+  .month-header .mh-num{font-family:var(--font-serif);font-size:0.9rem;color:var(--slate-light);width:24px;}
+  .month-header .mh-title{font-family:var(--font-serif);font-size:1.2rem;font-weight:600;}
+  .month-header .mh-sub{color:var(--slate);font-size:0.95rem;}
+  .month-header .mh-toggle{color:var(--slate-light);font-size:0.85rem;flex-shrink:0;}
   .month-body{padding:0 18px 16px 18px;}
   .week-block{border-top:1px solid var(--line);padding:14px 0;}
-  .week-title{font-weight:600;font-size:0.93rem;}
+  .week-title{font-weight:600;font-size:1.08rem;}
   .week-title .num{color:var(--brass-deep);font-family:var(--font-serif);margin-right:6px;}
-  .week-output{font-size:0.83rem;color:var(--slate);margin:4px 0 8px;}
+  .week-output{font-size:0.95rem;color:var(--slate);margin:5px 0 9px;}
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:0;}
   @media(max-width:600px){.grid{grid-template-columns:1fr;}}
-  .vocab-item{font-size:0.83rem;padding:4px 10px 4px 0;border-bottom:1px solid var(--line);}
+  .vocab-item{font-size:0.98rem;padding:7px 10px 7px 0;border-bottom:1px solid var(--line);}
 
   /* ---- Empty state: guides the next action instead of sitting flat ---- */
   .empty{text-align:center;padding:50px 20px;}
   .empty .empty-icon{color:var(--slate-light);margin-bottom:12px;}
-  .empty .empty-title{font-family:var(--font-serif);font-size:1.05rem;margin-bottom:6px;}
-  .empty .empty-sub{color:var(--slate);font-size:0.88rem;margin-bottom:18px;}
+  .empty .empty-title{font-family:var(--font-serif);font-size:1.2rem;margin-bottom:6px;}
+  .empty .empty-sub{color:var(--slate);font-size:0.98rem;margin-bottom:18px;}
   .empty .chips{justify-content:center;}
 
   footer{color:var(--slate-light);font-size:0.78rem;text-align:center;padding:30px 0 10px;}
 
   /* ---- Monitoring: identity bar, checkboxes, progress, teacher view ---- */
-  .idbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 8px;padding:12px 20px;background:var(--paper-raised);border:1px solid var(--line);border-top:none;border-radius:0 0 6px 6px;font-size:0.85rem;position:relative;}
+  .idbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 8px;padding:12px 20px;background:var(--paper-raised);border:1px solid var(--line);border-top:none;border-radius:0 0 6px 6px;font-size:0.95rem;position:relative;}
   .idbar::before{content:'';position:absolute;top:-1px;left:16px;right:16px;border-top:1px dashed rgba(150,117,31,0.4);}
   .idbar .who{color:var(--slate);display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
   .idbar .who b{color:var(--ink);font-weight:600;}
@@ -124,7 +124,7 @@
     .idbar .who{justify-content:center;}
     .idbar .switch{width:100%;}
   }
-  .setup-banner{background:var(--seal-soft);border:1px solid var(--seal);border-radius:6px;padding:12px 16px;font-size:0.82rem;color:var(--ink);margin:0 0 16px;line-height:1.6;}
+  .setup-banner{background:var(--seal-soft);border:1px solid var(--seal);border-radius:6px;padding:12px 16px;font-size:0.92rem;color:var(--ink);margin:0 0 16px;line-height:1.6;}
   .setup-banner b{color:var(--seal);}
 
   .mh-progress{display:flex;align-items:center;gap:6px;flex-shrink:0;}
@@ -160,29 +160,29 @@
   }
   .loading-note{padding:40px 20px;text-align:center;}
   .loading-note .empty-icon{color:var(--slate-light);margin-bottom:10px;}
-  .loading-note .empty-title{font-family:var(--font-serif);font-size:1rem;margin-bottom:5px;}
-  .loading-note .empty-sub{color:var(--slate);font-size:0.85rem;}
+  .loading-note .empty-title{font-family:var(--font-serif);font-size:1.15rem;margin-bottom:5px;}
+  .loading-note .empty-sub{color:var(--slate);font-size:0.95rem;}
   .loading-note button{margin-top:14px;background:var(--ink);color:var(--paper);border:none;border-radius:6px;padding:8px 16px;font-size:0.82rem;}
 
   /* ---- Mode tabs (เรียน / ทดสอบ / ครู) ---- */
   .mode-tabs{display:flex;gap:0;margin:0 0 22px;border-bottom:1px solid var(--line);}
-  .mode-tabs button{background:none;border:none;padding:11px 4px;margin-right:26px;font-size:0.9rem;color:var(--slate);font-weight:500;border-bottom:2px solid transparent;}
+  .mode-tabs button{background:none;border:none;padding:12px 4px;margin-right:26px;font-size:1.02rem;color:var(--slate);font-weight:500;border-bottom:2px solid transparent;}
   .mode-tabs button.active{color:var(--ink);border-bottom-color:var(--brass);}
 
   /* ---- Quiz setup ---- */
   .quiz-setup{max-width:480px;}
   .quiz-setup .field{margin-bottom:16px;}
-  .quiz-setup label{display:block;font-size:0.82rem;color:var(--slate);margin-bottom:6px;font-weight:500;}
-  select{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:6px;background:var(--paper-raised);color:var(--ink);font-family:var(--font-sans);font-size:0.92rem;}
+  .quiz-setup label{display:block;font-size:0.92rem;color:var(--slate);margin-bottom:6px;font-weight:500;}
+  select{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:6px;background:var(--paper-raised);color:var(--ink);font-family:var(--font-sans);font-size:1.02rem;}
   .quiz-type-pick{display:flex;gap:10px;}
   .quiz-type-pick button{flex:1;padding:14px 12px;border:1px solid var(--line);border-radius:8px;background:var(--paper-raised);text-align:left;}
   .quiz-type-pick button.picked{border-color:var(--brass);background:var(--brass-soft);}
-  .quiz-type-pick .qt-title{font-weight:600;font-size:0.9rem;margin-bottom:3px;}
-  .quiz-type-pick .qt-desc{font-size:0.78rem;color:var(--slate);}
-  .btn-primary{background:var(--ink);color:var(--paper);border:none;border-radius:6px;padding:12px 22px;font-size:0.92rem;font-weight:600;}
+  .quiz-type-pick .qt-title{font-weight:600;font-size:1.02rem;margin-bottom:3px;}
+  .quiz-type-pick .qt-desc{font-size:0.88rem;color:var(--slate);}
+  .btn-primary{background:var(--ink);color:var(--paper);border:none;border-radius:6px;padding:13px 22px;font-size:1.02rem;font-weight:600;}
   .btn-primary:hover{background:var(--ink-soft);}
   .btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
-  .btn-secondary{background:none;border:1px solid var(--line);color:var(--ink);border-radius:6px;padding:11px 20px;font-size:0.88rem;}
+  .btn-secondary{background:none;border:1px solid var(--line);color:var(--ink);border-radius:6px;padding:12px 20px;font-size:0.98rem;}
   .btn-secondary:hover{border-color:var(--brass);}
 
   /* ---- Quiz session ---- */
@@ -193,24 +193,24 @@
   .quiz-dots span.wrong{background:var(--seal);}
   .quiz-card{background:var(--paper-raised);border:1px solid var(--line);border-radius:6px;padding:28px 26px;margin-bottom:16px;}
   .quiz-prompt-label{font-size:0.76rem;color:var(--slate);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:8px;}
-  .quiz-prompt{font-family:var(--font-serif);font-size:1.4rem;font-weight:600;margin-bottom:22px;line-height:1.4;}
+  .quiz-prompt{font-family:var(--font-serif);font-size:1.55rem;font-weight:600;margin-bottom:22px;line-height:1.45;}
   .quiz-prompt .blank{display:inline-block;border-bottom:2px solid var(--brass);min-width:90px;color:var(--brass-deep);}
   .quiz-options{display:flex;flex-direction:column;gap:10px;}
-  .quiz-opt{text-align:left;padding:13px 16px;border:1px solid var(--line);border-radius:8px;background:var(--paper-raised);font-size:0.95rem;}
+  .quiz-opt{text-align:left;padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:var(--paper-raised);font-size:1.05rem;}
   .quiz-opt:hover{border-color:var(--brass);}
   .quiz-opt.correct{border-color:var(--brass);background:var(--brass-soft);color:var(--brass-deep);}
   .quiz-opt.wrong{border-color:var(--seal);background:var(--seal-soft);}
   .quiz-fill-row{display:flex;gap:10px;}
   .quiz-fill-row input[type=text]{flex:1;font-size:1.05rem;padding:13px 14px;}
-  .quiz-feedback{margin-top:14px;padding:12px 14px;border-radius:6px;font-size:0.87rem;line-height:1.6;}
+  .quiz-feedback{margin-top:14px;padding:12px 14px;border-radius:6px;font-size:0.97rem;line-height:1.6;}
   .quiz-feedback.good{background:var(--brass-soft);color:var(--ink);}
   .quiz-feedback.bad{background:var(--seal-soft);color:var(--ink);}
   .quiz-actions{display:flex;justify-content:flex-end;margin-top:16px;}
   .quiz-result{text-align:center;padding:40px 20px;}
   .quiz-result .score-num{font-family:var(--font-serif);font-size:3rem;font-weight:700;color:var(--brass-deep);}
-  .quiz-result .score-sub{color:var(--slate);font-size:0.9rem;margin-bottom:24px;}
+  .quiz-result .score-sub{color:var(--slate);font-size:1rem;margin-bottom:24px;}
   .quiz-empty{text-align:center;padding:40px 20px;color:var(--slate);}
-  .week-sentence{font-size:0.82rem;color:var(--ink-soft);font-style:italic;margin:8px 0;padding:8px 12px;background:var(--brass-soft);border-radius:6px;}
+  .week-sentence{font-size:0.95rem;color:var(--ink-soft);font-style:italic;margin:8px 0;padding:9px 12px;background:var(--brass-soft);border-radius:6px;}
   .speak-btn{background:none;border:none;padding:2px 5px;font-size:0.88rem;line-height:1;border-radius:5px;vertical-align:middle;margin-left:4px;flex-shrink:0;color:var(--brass-deep);}
   .speak-btn:hover{background:var(--brass-soft);}
   .say-along{display:inline-flex;align-items:center;gap:4px;flex-wrap:wrap;max-width:100%;}
@@ -228,11 +228,55 @@
   .vocab-row{display:flex;align-items:center;justify-content:space-between;gap:6px;}
   .week-sentence-row{display:flex;align-items:center;justify-content:space-between;gap:8px;}
   .quiz-history{border:1px solid var(--line);border-radius:6px;overflow:hidden;}
-  .quiz-history-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;font-size:0.83rem;border-bottom:1px solid var(--line);background:var(--paper-raised);}
+  .quiz-history-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;font-size:0.92rem;border-bottom:1px solid var(--line);background:var(--paper-raised);}
   .quiz-history-row:last-child{border-bottom:none;}
   .quiz-history-row .qh-type{color:var(--ink);}
   .quiz-history-row .qh-score{color:var(--brass-deep);font-weight:600;}
   .quiz-history-row .qh-date{color:var(--slate-light);font-size:0.76rem;}
+
+  /* ---- Hamburger sidebar: quick jump to any month ---- */
+  .hamburger-btn{position:fixed;bottom:22px;left:22px;z-index:60;width:56px;height:56px;border-radius:50%;background:var(--ink);color:var(--paper);border:none;box-shadow:0 4px 16px rgba(0,0,0,.25);font-size:1.4rem;display:flex;align-items:center;justify-content:center;}
+  .hamburger-btn:hover{background:var(--ink-soft);}
+  .sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,0);pointer-events:none;transition:background .2s;z-index:70;}
+  .sidebar-overlay.show{background:rgba(0,0,0,.4);pointer-events:auto;}
+  .sidebar-drawer{position:fixed;top:0;left:0;bottom:0;width:300px;max-width:85vw;background:var(--paper-raised);z-index:80;transform:translateX(-100%);transition:transform .25s ease;overflow-y:auto;box-shadow:4px 0 20px rgba(0,0,0,.15);}
+  .sidebar-drawer.open{transform:translateX(0);}
+  .sidebar-header{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--paper-raised);}
+  .sidebar-header span{font-family:var(--font-serif);font-weight:700;font-size:1.15rem;}
+  .sidebar-header button{background:none;border:none;font-size:1.3rem;color:var(--slate);padding:2px 8px;}
+  .sidebar-phase{padding:14px 20px 6px;}
+  .sidebar-phase-title{font-size:0.85rem;color:var(--brass-deep);font-weight:600;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:8px;}
+  .sidebar-month-link{display:block;width:100%;text-align:left;background:none;border:none;padding:11px 10px;border-radius:6px;font-size:1.02rem;color:var(--ink);margin-bottom:2px;}
+  .sidebar-month-link:hover{background:var(--brass-soft);}
+  .sidebar-month-link.current-month{background:var(--brass-soft);color:var(--brass-deep);font-weight:600;}
+
+  /* ---- Mobile phone screens ---- */
+  @media(max-width:480px){
+    #app{padding:16px 14px 90px;}
+    .cover{padding:24px 18px 20px;}
+    .cover h1{font-size:1.55rem;}
+    .cover p{font-size:0.95rem;}
+    .cover-top{flex-direction:column;gap:12px;}
+    .cover .crest{align-self:flex-start;}
+    .cover-meta{gap:10px 0;}
+    .cover-meta .field{padding-right:12px;margin-right:12px;margin-bottom:8px;}
+    .month-header{flex-wrap:wrap;row-gap:8px;padding:14px 14px;}
+    .mh-left{flex-wrap:wrap;row-gap:4px;}
+    .mh-progress{width:100%;justify-content:space-between;}
+    .month-body{padding:0 14px 14px;}
+    .quiz-card{padding:20px 16px;}
+    .quiz-prompt{font-size:1.25rem;}
+    .quiz-type-pick{flex-direction:column;}
+    .quiz-fill-row{flex-direction:column;align-items:stretch;}
+    .quiz-fill-row input[type=text]{margin-bottom:8px;}
+    #quiz-fill-submit, #quiz-start-btn, #quiz-next-btn, #quiz-retry-btn{width:100%;justify-content:center;}
+    .sidebar-drawer{width:86vw;}
+    .hamburger-btn{width:50px;height:50px;font-size:1.25rem;bottom:16px;left:16px;}
+    .mode-tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+    .mode-tabs button{margin-right:18px;white-space:nowrap;}
+    .quiz-history-row{flex-wrap:wrap;row-gap:2px;}
+    .quiz-actions{flex-wrap:wrap;}
+  }
 </style>
 </head>
 <body>
@@ -431,6 +475,11 @@ const WEEKS = [
 [96,'p5','สรุปหลักสูตรและแผนรักษาความคล่องแคล่ว',null,'วางแผนรักษาระดับภาษาต่อเนื่อง (พูดกับเจ้าของภาษาประจำ, เสพสื่อธุรกิจภาษาอังกฤษ, ฝึกต่อเนื่องรายสัปดาห์)'],
 ];
 function monthOfWeek(w){ return Math.ceil(w/4); }
+function monthsOfPhase(phaseId){
+  const months = new Set();
+  WEEKS.forEach(w=>{ if(w[1]===phaseId) months.add(monthOfWeek(w[0])); });
+  return Array.from(months).sort((a,b)=>a-b);
+}
 function phaseById(id){ return PHASES.find(p=>p.id===id); }
 function escapeHtml(s){ const d=document.createElement('div'); d.textContent=s||''; return d.innerHTML; }
 
@@ -448,6 +497,7 @@ const TEACHER_PIN = '1234';
 let studentName = null;
 let viewMode = 'course'; // 'course' | 'teacher' | 'quiz'
 let teacherUnlocked = false;
+let sidebarOpen = false;
 let progressLog = [];    // [{timestamp, student, week, phase, status}]
 let logLoaded = false;
 let logError = false;
@@ -716,6 +766,7 @@ function render(){
   const currentPhaseId = prog.currentPhaseId;
   const currentPhaseNum = phaseById(currentPhaseId).num;
   const reachedIndex = prog.doneCount>=96 ? 5 : currentPhaseNum - 1;
+  const currentMonthNum = prog.doneCount>=96 ? 24 : Math.ceil((WEEKS.find(w=>!prog.doneSet.has(w[0]))||WEEKS[WEEKS.length-1])[0]/4);
 
   app.innerHTML = `
     <div class="cover">
@@ -780,6 +831,15 @@ function render(){
     </div>
     <div id="months-container"></div>
     <footer>Executive English Academy — หลักสูตรฉบับเต็ม</footer>
+    <button class="hamburger-btn" id="hamburger-btn" title="สารบัญ - ไปยังเดือนที่ต้องการ" aria-label="เปิดสารบัญ">☰</button>
+    <div class="sidebar-overlay${sidebarOpen?' show':''}" id="sidebar-overlay"></div>
+    <div class="sidebar-drawer${sidebarOpen?' open':''}" id="sidebar-drawer">
+      <div class="sidebar-header"><span>สารบัญ 24 เดือน</span><button id="sidebar-close" aria-label="ปิดสารบัญ">✕</button></div>
+      ${PHASES.map(p=>`<div class="sidebar-phase">
+        <div class="sidebar-phase-title">ช่วงที่ ${p.num} · ${escapeHtml(p.title)}</div>
+        ${monthsOfPhase(p.id).map(m=>`<button class="sidebar-month-link${m===currentMonthNum?' current-month':''}" data-jump-month="${m}">เดือนที่ ${m}${m===currentMonthNum?' · กำลังเรียน':''}</button>`).join('')}
+      </div>`).join('')}
+    </div>
     `}
   `;
 
@@ -821,6 +881,25 @@ function render(){
     return;
   }
 
+  const hamBtn = document.getElementById('hamburger-btn');
+  if(hamBtn) hamBtn.onclick = ()=>{ sidebarOpen = true; render(); };
+  const sideOverlay = document.getElementById('sidebar-overlay');
+  if(sideOverlay) sideOverlay.onclick = ()=>{ sidebarOpen = false; render(); };
+  const sideClose = document.getElementById('sidebar-close');
+  if(sideClose) sideClose.onclick = ()=>{ sidebarOpen = false; render(); };
+  document.querySelectorAll('[data-jump-month]').forEach(btn=>{
+    btn.onclick = ()=>{
+      const m = +btn.dataset.jumpMonth;
+      sidebarOpen = false;
+      search = '';
+      openMonth = m;
+      render();
+      setTimeout(()=>{
+        const el = document.getElementById('month-card-'+m);
+        if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+      }, 60);
+    };
+  });
 
   const input = document.getElementById('search-input');
   input.oninput = (e)=>{
@@ -854,7 +933,7 @@ function render(){
     const isOpen = q ? true : (openMonth===m);
     const doneCount = weeksInMonth.filter(w=>isWeekDone(studentName, w[0])).length;
     const pct = Math.round(doneCount/weeksInMonth.length*100);
-    return `<div class="card${isOpen?' open':''}">
+    return `<div class="card${isOpen?' open':''}" id="month-card-${m}">
       <div class="month-header" data-month="${m}">
         <div class="mh-left"><span class="mh-num nums">${String(m).padStart(2,'0')}</span><span class="mh-title">เดือนที่ ${m}</span><span class="mh-sub">${escapeHtml(ph.title)} · ${escapeHtml(ph.level)}</span></div>
         <div class="mh-progress">
