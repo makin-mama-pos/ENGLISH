@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Executive English — หลักสูตร 24 เดือน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16213e; --ink-soft:#2c3a5e;
+    --paper:#faf9f6; --paper-raised:#ffffff;
+    --line:#e3e1da;
+    --gold:#96751f; --gold-soft:#f1e8d4;
+    --slate:#5b6472; --slate-light:#8890a0;
+    --good:#2f6844; --good-soft:#e5f0e7;
+    --font-serif:'Source Serif 4', Georgia, 'Times New Roman', serif;
+    --font-sans:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --radius:10px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --ink:#eef0f6; --ink-soft:#c7cde0;
+      --paper:#12162a; --paper-raised:#1b2140;
+      --line:#2c3356;
+      --gold:#d9b96a; --gold-soft:#332a13;
+      --slate:#a3aac2; --slate-light:#7a81a0;
+      --good:#7fd39c; --good-soft:#173324;
+    }
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-sans);min-height:100vh;}
+  h1,h2,h3,.serif{font-family:var(--font-serif);font-weight:600;letter-spacing:-0.01em;}
+  button{font-family:var(--font-sans);cursor:pointer;}
+  #app{max-width:980px;margin:0 auto;padding:0 20px 90px;}
+  .hero{padding:48px 0 30px;border-bottom:1px solid var(--line);margin-bottom:30px;}
+  .hero .mark{font-family:var(--font-serif);font-size:1.5rem;font-weight:700;display:block;margin-bottom:6px;}
+  .hero h1{font-size:2rem;margin:6px 0 10px;}
+  .hero p{color:var(--slate);max-width:560px;line-height:1.65;margin:0;}
+  .stats{display:flex;gap:26px;flex-wrap:wrap;margin-top:22px;}
+  .stat{font-size:0.85rem;color:var(--slate);}
+  .stat b{display:block;font-family:var(--font-serif);font-size:1.4rem;color:var(--ink);font-weight:600;}
+  input[type=text]{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:8px;font-family:var(--font-sans);font-size:0.95rem;background:var(--paper-raised);color:var(--ink);}
+  input[type=text]:focus{outline:2px solid var(--gold);outline-offset:1px;}
+  .timeline{display:flex;flex-direction:column;margin:26px 0 40px;}
+  .phase-row{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);}
+  .phase-num{font-family:var(--font-serif);font-size:1.2rem;color:var(--gold);font-weight:700;width:28px;flex-shrink:0;}
+  .phase-title{font-weight:600;font-size:1rem;}
+  .phase-range{font-size:0.8rem;color:var(--slate);margin-top:2px;}
+  .phase-focus{font-size:0.83rem;color:var(--slate);margin-top:6px;line-height:1.6;}
+  .card{background:var(--paper-raised);border:1px solid var(--line);border-radius:var(--radius);padding:0;overflow:hidden;margin-bottom:12px;}
+  .month-header{cursor:pointer;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;}
+  .month-header:hover{background:var(--gold-soft);}
+  .month-header .mh-title{font-family:var(--font-serif);font-size:1.05rem;font-weight:600;}
+  .month-header .mh-sub{color:var(--slate);font-size:0.85rem;margin-left:8px;}
+  .month-body{padding:0 20px 18px;}
+  .week-block{border-top:1px solid var(--line);padding:14px 0;}
+  .week-title{font-weight:600;font-size:0.93rem;}
+  .week-output{font-size:0.83rem;color:var(--slate);margin:4px 0 8px;}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+  @media(max-width:600px){.grid{grid-template-columns:1fr;}}
+  .vocab-item{font-size:0.83rem;padding:4px 10px 4px 0;border-bottom:1px solid var(--line);}
+  .empty{color:var(--slate-light);font-size:0.88rem;padding:40px 0;text-align:center;}
+  footer{color:var(--slate-light);font-size:0.78rem;text-align:center;padding:30px 0 10px;}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const PHASES = [
+  { id:'p1', num:1, range:'เดือน 1–3', level:'สู่ระดับ A1', title:'ปูพื้นฐาน',
+    focus:['ออกเสียง (phonics) และไวยากรณ์พื้นฐาน','คำศัพท์ใช้บ่อย 600–800 คำ','ฝึกฟัง–พูดประโยคสั้นทุกวัน'],
+    content:{
+      vocab:[['meeting','การประชุม'],['schedule','ตารางเวลา'],['deadline','กำหนดส่ง'],['project','โครงการ'],['colleague','เพื่อนร่วมงาน'],['manager','ผู้จัดการ'],['department','แผนก'],['report','รายงาน'],['email','อีเมล'],['discuss','พูดคุย/หารือ'],['decide','ตัดสินใจ'],['budget','งบประมาณ'],['client','ลูกค้า'],['team','ทีม'],['task','งานที่ต้องทำ'],['appointment','นัดหมาย']],
+      grammar:[
+        {point:'Present Simple — พูดถึงกิจวัตร/ข้อเท็จจริง', example:'I work in the finance department. / I usually start at 8 AM.'},
+        {point:'Past Simple — เล่าเหตุการณ์ที่จบไปแล้ว', example:'We had a meeting yesterday. / I called the client this morning.'},
+        {point:'Wh-Questions — ตั้งคำถามพื้นฐาน', example:'What time is the meeting? / Where is the report?'},
+      ],
+      phrases:['Nice to meet you.','My name is ___ and I work as ___.','I usually start my day by ___.','Could you repeat that, please?','I don\u2019t understand — could you explain?'],
+    },
+    assignments:[
+      {title:'แนะนำตัวเอง 60 วินาที', instr:'อัดคลิปเสียงแนะนำตัวเอง ชื่อ ตำแหน่ง บริษัท เป็นภาษาอังกฤษ ความยาวประมาณ 1 นาที', type:'audio'},
+      {title:'บรรยายวันทำงานของคุณ', instr:'อัดคลิปวิดีโอเล่ากิจวัตรวันทำงานปกติของคุณ 5–7 ประโยคง่ายๆ', type:'video'},
+      {title:'ทบทวนคำศัพท์ประจำสัปดาห์', instr:'อัดเสียงอ่านคำศัพท์ที่เรียนในสัปดาห์นี้ พร้อมแต่งประโยคตัวอย่างคนละ 1 ประโยค', type:'audio'},
+    ]},
+  { id:'p2', num:2, range:'เดือน 4–6', level:'สู่ A2', title:'สร้างฐานการสื่อสาร',
+    focus:['คำศัพท์ขยายเป็น 1,500–2,000 คำ','โครงสร้างประโยคซับซ้อนขึ้น','เริ่ม shadowing ฝึกจังหวะเสียง'],
+    content:{
+      vocab:[['negotiate','เจรจาต่อรอง'],['propose','เสนอ'],['agenda','วาระการประชุม'],['feedback','ความคิดเห็น/ข้อเสนอแนะ'],['performance','ผลการปฏิบัติงาน'],['strategy','กลยุทธ์'],['revenue','รายได้'],['forecast','การคาดการณ์'],['stakeholder','ผู้มีส่วนได้ส่วนเสีย'],['priority','สิ่งสำคัญลำดับแรก'],['resource','ทรัพยากร'],['timeline','กรอบเวลา'],['issue','ปัญหา'],['solution','ทางแก้ไข'],['approve','อนุมัติ'],['update','ให้ข้อมูลล่าสุด']],
+      grammar:[
+        {point:'Present Perfect — ประสบการณ์/สิ่งที่ทำมาต่อเนื่อง', example:'I have worked here for five years. / We have already sent the report.'},
+        {point:'Modal Verbs (can / should / must) — ให้คำแนะนำ/ข้อบังคับ', example:'You should talk to the manager. / We must finish this by Friday.'},
+        {point:'Comparatives & Superlatives — เปรียบเทียบตัวเลือก', example:'This plan is better than the last one. / It\u2019s the most cost-effective option.'},
+      ],
+      phrases:['I\u2019d like to update you on ___.','What do you think about ___?','Let\u2019s move on to the next point.','Could you clarify what you mean by ___?','I agree, but I also think ___.'],
+    },
+    assignments:[
+      {title:'เล่าข่าวธุรกิจที่สนใจ', instr:'เลือกข่าวธุรกิจ 1 เรื่อง แล้วอัดคลิปวิดีโอเล่าเนื้อหาเป็นภาษาอังกฤษ 1–2 นาที', type:'video'},
+      {title:'ฝึก Shadowing', instr:'เลือกคลิปภาษาอังกฤษสั้นๆ 1 นาที ฝึกพูดตาม (shadow) แล้วอัดเสียงตัวเองพูดตามคลิปนั้น', type:'audio'},
+      {title:'แนะนำโปรเจกต์ใหม่ให้ทีม', instr:'จำลองสถานการณ์แนะนำโปรเจกต์ใหม่ให้เพื่อนร่วมงานฟัง อัดเป็นวิดีโอ 1–2 นาที', type:'video'},
+    ]},
+  { id:'p3', num:3, range:'เดือน 7–12', level:'สู่ B1', title:'ภาษาอังกฤษธุรกิจเบื้องต้น',
+    focus:['ศัพท์และสถานการณ์ธุรกิจ','อีเมลและการประชุม','Roleplay สถานการณ์งานจริง'],
+    content:{
+      vocab:[['quarterly','รายไตรมาส'],['invoice','ใบแจ้งหนี้'],['compliance','การปฏิบัติตามกฎ'],['negotiation','การเจรจา'],['merger','การควบรวมกิจการ'],['logistics','โลจิสติกส์'],['supply chain','ห่วงโซ่อุปทาน'],['KPI','ตัวชี้วัดผลงาน'],['ROI','ผลตอบแทนการลงทุน'],['onboarding','การปฐมนิเทศพนักงานใหม่'],['turnover','อัตราการลาออก/ยอดขาย'],['benchmark','เกณฑ์เปรียบเทียบ'],['outsource','จ้างงานภายนอก'],['procurement','การจัดซื้อจัดจ้าง'],['liability','ความรับผิด/หนี้สิน']],
+      grammar:[
+        {point:'Present Perfect Continuous — สิ่งที่ทำต่อเนื่องจนถึงตอนนี้', example:'We have been negotiating this deal for two weeks.'},
+        {point:'First Conditional — คาดการณ์ผลลัพธ์ทางธุรกิจ', example:'If we increase the budget, we will hit the target.'},
+        {point:'Passive Voice — ใช้ในรายงาน/อีเมลทางการ', example:'The report was submitted yesterday. / The order has been confirmed.'},
+      ],
+      phrases:['Let\u2019s schedule a follow-up meeting.','I\u2019ll circle back on that.','To summarize what we discussed ___.','That\u2019s a good point, however ___.','Can we push the deadline to ___?'],
+    },
+    assignments:[
+      {title:'เปิดประชุมทีมภาษาอังกฤษ', instr:'อัดคลิปวิดีโอสมมติว่ากำลังเปิดประชุมทีม แนะนำวาระการประชุมวันนี้', type:'video'},
+      {title:'อ่านอีเมลธุรกิจออกเสียง', instr:'เขียนอีเมลธุรกิจสั้นๆ 1 ฉบับ แล้วอัดเสียงอ่านออกเสียงให้ชัดเจน', type:'audio'},
+      {title:'Small talk กับลูกค้าต่างชาติ', instr:'จำลองบทสนทนา small talk ก่อนเริ่มประชุมกับลูกค้าต่างชาติ อัดวิดีโอความยาว 2 นาที', type:'video'},
+    ]},
+  { id:'p4', num:4, range:'เดือน 13–18', level:'สู่ B2', title:'ทักษะบริหารขั้นสูง',
+    focus:['การนำเสนองาน (presentation)','การเจรจาต่อรอง','ตอบคำถามแบบด้นสด (Q&A)'],
+    content:{
+      vocab:[['leverage','ใช้ประโยชน์จาก'],['synergy','การทำงานร่วมกันที่เสริมพลัง'],['scalability','ความสามารถในการขยายตัว'],['mitigate','บรรเทา/ลดความเสี่ยง'],['bottleneck','จุดคอขวด'],['disrupt','เปลี่ยนแปลงแบบพลิกโฉม'],['incentivize','สร้างแรงจูงใจ'],['streamline','ทำให้กระบวนการคล่องตัวขึ้น'],['differentiate','สร้างความแตกต่าง'],['sustainable','ยั่งยืน'],['transparent','โปร่งใส'],['accountable','รับผิดชอบตรวจสอบได้'],['proactive','เชิงรุก'],['contingency','แผนสำรอง'],['viable','เป็นไปได้ในทางปฏิบัติ']],
+      grammar:[
+        {point:'Mixed Conditionals — สมมติสถานการณ์ที่ซับซ้อนขึ้น', example:'If we had invested earlier, we would be ahead of competitors now.'},
+        {point:'Advanced Modals of Speculation', example:'The delay might have been caused by the supplier. / We could have handled that better.'},
+        {point:'Complex Linking (although / despite / whereas)', example:'Despite the setback, the team met the target. Sales grew, whereas costs fell.'},
+      ],
+      phrases:['Let me walk you through our approach.','From a strategic standpoint ___.','I hear what you\u2019re saying, but our data suggests ___.','We need to align on next steps.','What\u2019s the bottom line here?'],
+    },
+    assignments:[
+      {title:'นำเสนอผลงานไตรมาส', instr:'อัดคลิปวิดีโอนำเสนอผลงานหรือแผนงานไตรมาส ความยาว 3–5 นาที', type:'video'},
+      {title:'เจรจาต่อรองเงื่อนไขสัญญา', instr:'จำลองสถานการณ์เจรจาต่อรองเงื่อนไขกับคู่ค้า อัดเป็นวิดีโอ', type:'video'},
+      {title:'ตอบคำถามกระทันหัน', instr:'อัดเสียงตอบคำถามธุรกิจ 5 ข้อแบบไม่เตรียมคำตอบล่วงหน้า', type:'audio'},
+    ]},
+  { id:'p5', num:5, range:'เดือน 19–24', level:'สู่ C1', title:'ความคล่องแคล่วและความเป็นธรรมชาติ',
+    focus:['พูดโต้ตอบทันทีโดยไม่แปลในหัว','สำนวนธุรกิจระดับสูง','ประชุม/สังคมนานาชาติให้บ่อยที่สุด'],
+    content:{
+      vocab:[['move the needle','ทำให้เกิดผลกระทบที่วัดได้'],['low-hanging fruit','สิ่งที่ทำได้ง่ายและเห็นผลเร็ว'],['circle back','กลับมาคุยเรื่องนี้อีกครั้ง'],['touch base','ติดต่อพูดคุยสั้นๆ'],['think outside the box','คิดนอกกรอบ'],['on the same page','เข้าใจตรงกัน'],['bandwidth','เวลา/กำลังที่มีอยู่'],['deep dive','การวิเคราะห์เชิงลึก'],['take it offline','ไปคุยรายละเอียดกันภายหลัง'],['north star','เป้าหมายหลักที่ยึดถือ']],
+      grammar:[
+        {point:'Hedging & Diplomatic Language — พูดอย่างมีชั้นเชิง', example:'It might be worth considering an alternative approach.'},
+        {point:'Inversion for Emphasis', example:'Not only did we exceed our targets, but we also expanded into two new markets.'},
+        {point:'Discourse Markers (that said / on balance / having said that)', example:'That said, I think we should reconsider the timeline. On balance, the risk is worth taking.'},
+      ],
+      phrases:['That said, I think we should reconsider ___.','Let\u2019s table that for now and take it offline.','I want to make sure we\u2019re on the same page before we proceed.','Not to put too fine a point on it, but ___.','At the end of the day, what matters is ___.'],
+    },
+    assignments:[
+      {title:'สรุปผลประชุมนานาชาติ', instr:'อัดคลิปวิดีโอสรุปผลการประชุมหรือเจรจาที่ผ่านมา และแผนขั้นต่อไป 3 นาที', type:'video'},
+      {title:'โต้แย้งอย่างสุภาพแต่หนักแน่น', instr:'อัดเสียงฝึกโต้แย้งความเห็นทางธุรกิจอย่างสุภาพแต่มีน้ำหนัก', type:'audio'},
+      {title:'วิเคราะห์เคสศึกษาธุรกิจ', instr:'เลือก case study ธุรกิจ 1 เรื่อง เล่าและวิเคราะห์เป็นภาษาอังกฤษ 3–5 นาที', type:'video'},
+    ]},
+];
+function phaseById(id){ return PHASES.find(p=>p.id===id); }
+function defaultAssignmentsFor(phaseId){
+  const ph = phaseById(phaseId); if(!ph) return [];
+  return ph.assignments.map((a,i)=>({ id:'default:'+phaseId+':'+i, title:a.title, instr:a.instr, type:a.type, phaseId, isDefault:true }));
+}
+
+// ---------- full 96-week curriculum ----------
+// [week, phaseId, title, vocab|null, output]
+const WEEKS = [
+[1,'p1','เสียงภาษาอังกฤษและการทักทาย',[['hello','สวัสดี'],['good morning','สวัสดีตอนเช้า'],['good afternoon','สวัสดีตอนบ่าย'],['good evening','สวัสดีตอนเย็น'],['nice to meet you','ยินดีที่ได้รู้จัก'],['name','ชื่อ'],['company','บริษัท'],['position','ตำแหน่ง'],['department','แผนก'],['introduce','แนะนำ'],['colleague','เพื่อนร่วมงาน'],['welcome','ยินดีต้อนรับ'],['goodbye','ลาก่อน'],['see you later','แล้วเจอกัน'],['how are you','สบายดีไหม']],'อัดเสียงแนะนำตัวเอง 1 นาที'],
+[2,'p1','กิจวัตรประจำวัน',[['wake up','ตื่นนอน'],['get ready','เตรียมตัว'],['commute','เดินทางไป-กลับที่ทำงาน'],['arrive','มาถึง'],['start work','เริ่มงาน'],['check email','เช็กอีเมล'],['attend','เข้าร่วม'],['finish work','เลิกงาน'],['go home','กลับบ้าน'],['lunch break','พักเที่ยง'],['coffee break','พักดื่มกาแฟ'],['schedule','ตารางเวลา'],['routine','กิจวัตร'],['usually','โดยปกติ'],['every day','ทุกวัน']],'อัดเสียงเล่ากิจวัตรวันทำงาน'],
+[3,'p1','ตัวเลข เวลา และตาราง',[['number','ตัวเลข'],['date','วันที่'],["o'clock",'นาฬิกา'],['half past','ครึ่ง (เวลา)'],['quarter to','อีก 15 นาทีจะถึง'],['appointment','นัดหมาย'],['available','ว่าง'],['free time','เวลาว่าง'],['busy','ไม่ว่าง'],['reschedule','เลื่อนนัด'],['postpone','เลื่อนออกไป'],['on time','ตรงเวลา'],['late','สาย'],['early','เร็ว'],['deadline','กำหนดส่ง']],'จำลองบทสนทนานัดเวลาประชุม'],
+[4,'p1','คนและตำแหน่งในที่ทำงาน',[['CEO','ประธานเจ้าหน้าที่บริหาร'],['manager','ผู้จัดการ'],['director','ผู้อำนวยการ'],['supervisor','หัวหน้างาน'],['assistant','ผู้ช่วย'],['staff','พนักงาน'],['HR','ฝ่ายบุคคล'],['finance','ฝ่ายการเงิน'],['marketing','ฝ่ายการตลาด'],['sales','ฝ่ายขาย'],['IT','ฝ่ายไอที'],['operations','ฝ่ายปฏิบัติการ'],['team leader','หัวหน้าทีม'],['employee','ลูกจ้าง'],['report to','รายงานตรงต่อ']],'แนะนำเพื่อนร่วมงาน 3 คน (จากรูป)'],
+[5,'p1','บรรยายบริษัทของคุณ',[['company','บริษัท'],['industry','อุตสาหกรรม'],['product','สินค้า'],['service','บริการ'],['headquarters','สำนักงานใหญ่'],['branch','สาขา'],['founded','ก่อตั้ง'],['employees','พนักงาน'],['market','ตลาด'],['customer','ลูกค้า'],['supplier','ซัพพลายเออร์'],['partner','พันธมิตร'],['brand','แบรนด์'],['mission','พันธกิจ'],['vision','วิสัยทัศน์']],'บรรยายบริษัท 5 ประโยค'],
+[6,'p1','เล่าเหตุการณ์ที่ผ่านมา',[['went','ไป'],['did','ทำ'],['had','มี'],['met','พบ'],['made','ทำ/สร้าง'],['took','เอา/ใช้เวลา'],['gave','ให้'],['sent','ส่ง'],['wrote','เขียน'],['spoke','พูด'],['began','เริ่มต้น'],['finished','เสร็จสิ้น'],['decided','ตัดสินใจ'],['called','โทร'],['worked','ทำงาน']],'เล่ากิจกรรมสัปดาห์ที่แล้ว'],
+[7,'p1','บอกตำแหน่งและทิศทางในออฟฟิศ',[['next to','ข้างๆ'],['behind','ข้างหลัง'],['in front of','ข้างหน้า'],['between','ระหว่าง'],['upstairs','ชั้นบน'],['downstairs','ชั้นล่าง'],['floor','ชั้นอาคาร'],['room','ห้อง'],['lobby','ล็อบบี้'],['elevator','ลิฟต์'],['stairs','บันได'],['exit','ทางออก'],['entrance','ทางเข้า'],['meeting room','ห้องประชุม'],['reception','ส่วนต้อนรับ']],'พาแขกเดินชมออฟฟิศ (จำลอง)'],
+[8,'p1','ขอความช่วยเหลือและเสนอความช่วยเหลือ',[['help','ช่วยเหลือ'],['assist','ช่วยเหลือ(ทางการ)'],['favor','ความช่วยเหลือ'],['could you','คุณช่วย...ได้ไหม'],['would you mind','จะรังเกียจไหมถ้า'],['sure','ได้เลย'],['of course','แน่นอน'],['no problem','ไม่เป็นไร'],["I'm sorry",'ขอโทษ'],['excuse me','ขอโทษ(เรียก)'],['thank you','ขอบคุณ'],['appreciate','ซาบซึ้งใจ'],['kindly','กรุณา'],['request','คำขอ'],['offer','เสนอ']],'จำลองสถานการณ์ขอความช่วยเหลือ'],
+[9,'p1','โทรศัพท์และอีเมลเบื้องต้น',[['call','โทร'],['answer','รับสาย'],['hang up','วางสาย'],['voicemail','ข้อความเสียง'],['hold on','รอสักครู่'],['transfer','โอนสาย'],['extension','เบอร์ต่อภายใน'],['attach','แนบไฟล์'],['forward','ส่งต่อ'],['reply','ตอบกลับ'],['cc','สำเนาถึง'],['subject','หัวเรื่อง'],['inbox','กล่องจดหมาย'],['sign off','ลงท้ายอีเมล'],['regards','ด้วยความนับถือ']],'ฝากข้อความเสียงทางโทรศัพท์'],
+[10,'p1','การประชุมเบื้องต้น',[['agenda','วาระการประชุม'],['minutes','รายงานการประชุม'],['attend','เข้าร่วม'],['invite','เชิญ'],['postpone','เลื่อน'],['cancel','ยกเลิก'],['start','เริ่ม'],['end','จบ'],['discuss','หารือ'],['decide','ตัดสินใจ'],['action item','สิ่งที่ต้องทำต่อ'],['follow-up','การติดตามผล'],['participant','ผู้เข้าร่วม'],['chairperson','ประธานที่ประชุม'],['present (v.)','นำเสนอ']],'ประกาศนัดประชุม'],
+[11,'p1','Small Talk เอาตัวรอด',[['weather','อากาศ'],['weekend','วันหยุดสุดสัปดาห์'],['holiday','วันหยุด'],['hobby','งานอดิเรก'],['family','ครอบครัว'],['traffic','การจราจร'],['news','ข่าว'],['sports','กีฬา'],['restaurant','ร้านอาหาร'],['travel','เดินทางท่องเที่ยว'],["how's it going",'เป็นไงบ้าง'],['busy week','สัปดาห์ที่ยุ่ง'],['relax','พักผ่อน'],['plan','แผนการ'],['enjoy','เพลิดเพลิน']],'จำลอง small talk 2 นาที'],
+[12,'p1','ทบทวน + ประเมิน Phase 1',null,'วิดีโอแนะนำตัว + ตอบคำถามสด 3 นาที'],
+
+[13,'p2','โครงสร้างองค์กร',[['organization','องค์กร'],['structure','โครงสร้าง'],['hierarchy','ลำดับชั้น'],['subsidiary','บริษัทลูก'],['division','ฝ่ายใหญ่'],['board of directors','คณะกรรมการบริษัท'],['shareholder','ผู้ถือหุ้น'],['stakeholder','ผู้มีส่วนได้ส่วนเสีย'],['report to','รายงานตรงต่อ'],['organizational chart','แผนผังองค์กร'],['role','บทบาท'],['responsibility','ความรับผิดชอบ'],['reporting line','สายการรายงาน'],['cross-functional','ข้ามสายงาน'],['headquarters','สำนักงานใหญ่']],'บรรยาย org chart ของบริษัท'],
+[14,'p2','พูดถึงประสบการณ์ทำงาน',[['experience','ประสบการณ์'],['career','เส้นทางงาน'],['background','ภูมิหลัง'],['achievement','ความสำเร็จ'],['accomplish','ทำสำเร็จ'],['promote','เลื่อนตำแหน่ง'],['promotion','การเลื่อนตำแหน่ง'],['responsible for','รับผิดชอบเรื่อง'],['in charge of','ดูแลรับผิดชอบ'],['previous','ก่อนหน้า'],['current','ปัจจุบัน'],['skill','ทักษะ'],['expertise','ความเชี่ยวชาญ'],['qualified','มีคุณสมบัติเหมาะสม'],['career path','เส้นทางอาชีพ']],'เล่าประวัติการทำงาน'],
+[15,'p2','ตัวเลขในธุรกิจ',[['increase','เพิ่มขึ้น'],['decrease','ลดลง'],['percentage','เปอร์เซ็นต์'],['growth','การเติบโต'],['decline','ถดถอย'],['double','เพิ่มสองเท่า'],['triple','เพิ่มสามเท่า'],['average','ค่าเฉลี่ย'],['total','ผลรวม'],['approximately','ประมาณ'],['significant','อย่างมีนัยสำคัญ'],['slight','เล็กน้อย'],['dramatic','อย่างรวดเร็ว'],['compared to','เมื่อเทียบกับ'],['data','ข้อมูล']],'อธิบายกราฟง่ายๆ'],
+[16,'p2','แสดงความเห็นอย่างสุภาพ',[['opinion','ความคิดเห็น'],['in my opinion','ในความคิดเห็นของฉัน'],['I believe','ฉันเชื่อว่า'],['I think','ฉันคิดว่า'],['perspective','มุมมอง'],['point of view','มุมมอง'],['agree','เห็นด้วย'],['disagree','ไม่เห็นด้วย'],['suggest','เสนอแนะ'],['recommend','แนะนำ'],['consider','พิจารณา'],['viewpoint','มุมมอง'],['personally','ส่วนตัว'],['from my experience','จากประสบการณ์'],['it seems that','ดูเหมือนว่า']],'ให้ความเห็นต่อประเด็นธุรกิจ'],
+[17,'p2','ภาษาที่ใช้ในที่ประชุม',[['agenda item','หัวข้อในวาระ'],['action item','สิ่งที่ต้องทำต่อ'],['minute-taker','คนจดรายงาน'],['take notes','จดบันทึก'],['raise a point','เสนอประเด็น'],['bring up','หยิบยกขึ้นมา'],['table (a topic)','พักเรื่องไว้ก่อน'],['wrap up','สรุปปิดท้าย'],['next steps','ขั้นตอนถัดไป'],['follow up','ติดตามผล'],['assign','มอบหมาย'],['deadline','กำหนดส่ง'],['priority','สิ่งสำคัญลำดับแรก'],['discussion','การพูดคุย'],['decision','การตัดสินใจ']],'จำลองการประชุมสั้นๆ'],
+[18,'p2','เสนอ / เห็นด้วย / ไม่เห็นด้วย',[['suggest','เสนอแนะ'],['propose','เสนอ(ทางการ)'],['agree','เห็นด้วย'],['disagree','ไม่เห็นด้วย'],["I'd suggest",'ฉันขอเสนอว่า'],['what about','แล้ว...ล่ะ'],['how about','...ดีไหม'],['I see your point','เข้าใจประเด็นของคุณ'],['on the other hand','ในทางกลับกัน'],["I'm not sure",'ไม่แน่ใจ'],['that makes sense','ฟังดูสมเหตุสมผล'],['good idea','ความคิดที่ดี'],["I'd rather",'ขอเลือกที่จะ'],['alternative','ทางเลือกอื่น'],['compromise','ข้อตกลงร่วมกัน']],'จำลองบทสนทนาความเห็นต่าง'],
+[19,'p2','อธิบายแนวโน้มและข้อมูล',[['rise','ขึ้น'],['fall','ลง'],['fluctuate','ผันผวน'],['steady','คงที่'],['stable','มั่นคง'],['sharp','รวดเร็ว/ชัน'],['gradual','ค่อยเป็นค่อยไป'],['peak','จุดสูงสุด'],['drop','ตกลงฉับพลัน'],['remain','คงอยู่'],['trend','แนวโน้ม'],['overall','โดยรวม'],['compared to last year','เทียบปีก่อน'],['slightly','เล็กน้อย'],['noticeably','อย่างเห็นได้ชัด']],'อธิบายกราฟยอดขาย'],
+[20,'p2','อีเมลและการสื่อสารลายลักษณ์อักษร',[['Dear','เรียน'],['Sincerely','ด้วยความนับถือ'],['kindly','กรุณา'],['please find attached','โปรดดูไฟล์แนบ'],['as per','ตามที่'],['further to','ต่อเนื่องจาก'],['I am writing to','ฉันเขียนถึงเพื่อ'],['could you please','ช่วย...ได้ไหม'],['look forward to','ตั้งตารอ'],['at your earliest convenience','เมื่อสะดวกโดยเร็วที่สุด'],['confirm','ยืนยัน'],['update','อัปเดต'],['inform','แจ้งให้ทราบ'],['request','ขอร้อง'],['CC','สำเนาถึง']],'เขียน+อ่านอีเมลธุรกิจออกเสียง'],
+[21,'p2','สำนวนธุรกิจเบื้องต้น',[['get the ball rolling','เริ่มดำเนินการ'],['on the same page','เข้าใจตรงกัน'],['touch base','ติดต่อพูดคุยสั้นๆ'],['keep me posted','แจ้งความคืบหน้า'],['run out of time','เวลาหมด'],['think outside the box','คิดนอกกรอบ'],['hands-on','ลงมือทำเอง'],['in the loop','รับทราบข้อมูลตลอด'],['at the end of the day','ท้ายที่สุดแล้ว'],['game plan','แผนการดำเนินงาน'],['back to square one','กลับไปเริ่มต้นใหม่'],['ballpark figure','ตัวเลขประมาณการ'],['up in the air','ยังไม่แน่นอน'],['cut corners','ลัดขั้นตอน'],['bottom line','ผลสรุปสุดท้าย']],'Shadow คลิปธุรกิจ 2 นาที'],
+[22,'p2','มารยาทการโทร/วิดีโอคอล',[['can you hear me','ได้ยินไหม'],["you're on mute",'ปิดไมค์อยู่'],['reschedule','เลื่อนนัด'],['technical issue','ปัญหาทางเทคนิค'],['join the call','เข้าร่วมสาย'],['screen share','แชร์หน้าจอ'],['connection','สัญญาณเชื่อมต่อ'],['freeze','ภาพค้าง'],['background noise','เสียงรบกวน'],['dial in','โทรเข้าร่วมประชุม'],['log in','ล็อกอิน'],['sign off','ออกจากระบบ'],['wrap up the call','สรุปปิดการประชุม'],["let's pick this up",'มาคุยกันต่อ'],['follow-up call','การโทรติดตามผล']],'จำลอง conference call'],
+[23,'p2','แนะนำโปรเจกต์',[['launch','เปิดตัว'],['timeline','กรอบเวลา'],['milestone','จุดสำคัญของโครงการ'],['deliverable','สิ่งที่ต้องส่งมอบ'],['scope','ขอบเขตงาน'],['objective','วัตถุประสงค์'],['kickoff','การเริ่มต้นโครงการ'],['phase','ระยะ/ช่วง'],['resource','ทรัพยากร'],['budget','งบประมาณ'],['stakeholder','ผู้มีส่วนได้ส่วนเสีย'],['progress','ความคืบหน้า'],['update','ข้อมูลล่าสุด'],['roadmap','แผนที่นำทาง'],['target date','วันที่เป้าหมาย']],'นำเสนอแผนโปรเจกต์ย่อย'],
+[24,'p2','ทบทวน + ประเมิน Phase 2',null,'วิดีโอ 3 นาที: เล่าสถานการณ์งาน + ความเห็น'],
+
+[25,'p3','อุตสาหกรรมและบริษัทเชิงลึก',[['market share','ส่วนแบ่งตลาด'],['competitor','คู่แข่ง'],['sector','ภาคธุรกิจ'],['revenue','รายได้'],['profit','กำไร'],['loss','ขาดทุน'],['merger','การควบรวมกิจการ'],['acquisition','การเข้าซื้อกิจการ'],['expand','ขยาย'],['emerging market','ตลาดเกิดใหม่'],['mature market','ตลาดอิ่มตัว'],['niche','ตลาดเฉพาะกลุ่ม'],['disrupt','เปลี่ยนแปลงพลิกโฉม'],['dominant','ครองตลาด'],['emerging','เกิดใหม่']],'บรรยายภาพรวมอุตสาหกรรมของคุณ'],
+[26,'p3','อีเมล: คำขอและการติดตามงาน',[['as discussed','ตามที่คุยกัน'],['kindly','กรุณา'],['per our conversation','ตามที่เราคุยกัน'],['following up','ติดตามเรื่อง'],['gentle reminder','เตือนความจำอย่างสุภาพ'],['at your convenience','ตามความสะดวก'],['circle back','กลับมาคุยอีกครั้ง'],['pending','อยู่ระหว่างดำเนินการ'],['outstanding','ที่ยังค้างอยู่'],['resolve','แก้ไข/จบเรื่อง'],['clarify','ชี้แจง'],['confirm receipt','ยืนยันการได้รับ'],['awaiting your response','รอคำตอบ'],['appreciate your prompt reply','ขอบคุณสำหรับการตอบกลับที่รวดเร็ว'],['gentle follow-up','การติดตามอย่างสุภาพ']],'เขียน+อ่านอีเมลติดตามงาน'],
+[27,'p3','การเป็นประธานและร่วมประชุม',[['chair','ประธานการประชุม'],['minute-taker','ผู้จดบันทึก'],['have the floor','ได้สิทธิ์พูด'],['yield the floor','ให้สิทธิ์พูดต่อ'],['motion','ญัตติ'],['second the motion','รับรองญัตติ'],['vote','ลงคะแนน'],['quorum','องค์ประชุมครบ'],['adjourn','ปิดการประชุม'],['reconvene','ประชุมต่อ'],['open the floor','เปิดให้แสดงความเห็น'],['close the meeting','ปิดประชุม'],['call to order','เริ่มประชุมอย่างเป็นทางการ'],['unanimous','เป็นเอกฉันท์'],['raise a motion','เสนอญัตติ']],'นำประชุมจำลอง 5 นาที'],
+[28,'p3','อธิบายปัญหาและทางแก้',[['root cause','สาเหตุที่แท้จริง'],['resolve','แก้ไข'],['workaround','ทางแก้ชั่วคราว'],['obstacle','อุปสรรค'],['challenge','ความท้าทาย'],['troubleshoot','แก้ไขปัญหาเชิงเทคนิค'],['identify','ระบุ'],['address','จัดการแก้ไข'],['mitigate','บรรเทา'],['resolution','ทางแก้'],['temporary fix','การแก้ไขชั่วคราว'],['permanent solution','ทางแก้ถาวร'],['escalate','ยกระดับปัญหา'],['prioritize','จัดลำดับความสำคัญ'],['impact','ผลกระทบ']],'อธิบายปัญหางาน + ทางแก้'],
+[29,'p3','Small Talk กับลูกค้า',[['welcome','ต้อนรับ'],['hospitality','การต้อนรับขับสู้'],['how was your trip','การเดินทางเป็นอย่างไรบ้าง'],['make yourself comfortable','เชิญตามสบาย'],['may I offer you','ขอเสนอ...ให้ไหม'],["it's a pleasure",'เป็นเกียรติ'],['I hope you had a good flight','หวังว่าเที่ยวบินราบรื่น'],['let me show you around','ขอพาชมรอบๆ'],['refreshments','เครื่องดื่ม/ของว่าง'],['comfortable','สบาย'],['accommodate','อำนวยความสะดวก'],['arrangements','การจัดเตรียม'],['itinerary','กำหนดการ'],['host','เจ้าภาพ'],['guest','แขก']],'จำลองต้อนรับลูกค้า'],
+[30,'p3','รับมือข้อร้องเรียนอย่างมืออาชีพ',[['complaint','ข้อร้องเรียน'],['apologize','ขอโทษ'],['compensate','ชดเชย'],['escalate','ยกระดับปัญหา'],['inconvenience','ความไม่สะดวก'],['resolve the issue','แก้ไขปัญหา'],['refund','คืนเงิน'],['dissatisfied','ไม่พอใจ'],['misunderstanding','ความเข้าใจผิด'],['rectify','แก้ไขให้ถูกต้อง'],['reassure','ทำให้อุ่นใจ'],['sincerely apologize','ขออภัยอย่างจริงใจ'],['take responsibility','รับผิดชอบ'],['make it right','แก้ไขให้เป็นธรรม'],['follow up','ติดตามผล']],'รับสายร้องเรียนจำลอง'],
+[31,'p3','นำเสนอสินค้า/บริการเบื้องต้น',[['features','คุณสมบัติ'],['benefits','ประโยชน์'],['pricing','ราคา'],['package','แพ็กเกจ'],['value proposition','คุณค่าที่นำเสนอ'],['competitive advantage','ความได้เปรียบทางแข่งขัน'],['unique selling point','จุดขายที่แตกต่าง'],['customize','ปรับให้เหมาะกับลูกค้า'],['tailor','ปรับแต่งเฉพาะ'],['demonstration','การสาธิต'],['trial','การทดลองใช้'],['warranty','การรับประกัน'],['guarantee','การรับประกันผลลัพธ์'],['upgrade','อัปเกรด'],['subscription','การสมัครสมาชิก']],'พิทช์สินค้า 2 นาที'],
+[32,'p3','พื้นฐานการเจรจาต่อรอง',[['terms','เงื่อนไข'],['counteroffer','ข้อเสนอโต้กลับ'],['compromise','ข้อตกลงร่วมกัน'],['negotiate','เจรจาต่อรอง'],['bargain','ต่อรองราคา'],['concession','การยอมผ่อนปรน'],['deal','ข้อตกลง'],['agreement','ข้อตกลง'],['contract','สัญญา'],['clause','ข้อสัญญา'],['terms and conditions','ข้อกำหนดและเงื่อนไข'],['flexible','ยืดหยุ่น'],['non-negotiable','ต่อรองไม่ได้'],['win-win','ได้ประโยชน์ทั้งสองฝ่าย'],['leverage','อำนาจต่อรอง']],'เจรจาข้อตกลงง่ายๆ จำลอง'],
+[33,'p3','อ่านและอธิบายรายงาน',[['summary','บทสรุป'],['findings','ผลการศึกษา'],['appendix','ภาคผนวก'],['executive summary','บทสรุปผู้บริหาร'],['overview','ภาพรวม'],['key takeaway','ประเด็นสำคัญ'],['conclusion','บทสรุป'],['recommendation','ข้อเสนอแนะ'],['methodology','ระเบียบวิธีการศึกษา'],['analysis','การวิเคราะห์'],['insight','ข้อมูลเชิงลึก'],['highlight','เน้นย้ำ'],['detail','รายละเอียด'],['section','หัวข้อย่อย'],['reference','การอ้างอิง']],'สรุปรายงานสั้นๆ ด้วยเสียง'],
+[34,'p3','อธิบายกราฟและแนวโน้ม (ขั้นสูงขึ้น)',[['peak','จุดสูงสุด'],['plateau','ช่วงคงที่'],['volatility','ความผันผวน'],['spike','พุ่งขึ้นฉับพลัน'],['surge','เพิ่มขึ้นรวดเร็ว'],['plummet','ดิ่งลงรวดเร็ว'],['bottom out','ถึงจุดต่ำสุด'],['recover','ฟื้นตัว'],['correlate','มีความสัมพันธ์กัน'],['projection','การคาดการณ์'],['benchmark','เกณฑ์เปรียบเทียบ'],['baseline','ค่าฐาน'],['variance','ความแปรปรวน'],['outlier','ค่าผิดปกติ'],['consistent','สม่ำเสมอ']],'อธิบายกราฟให้ "บอร์ดบริหาร" ฟัง'],
+[35,'p3','สั่งงานและมอบหมายงาน',[['assign','มอบหมาย'],['delegate','มอบอำนาจ'],['follow up','ติดตามผล'],['task','งานที่ต้องทำ'],['responsibility','ความรับผิดชอบ'],['deadline','กำหนดส่ง'],['priority','สิ่งสำคัญลำดับแรก'],['oversee','ดูแลควบคุม'],['monitor','ติดตามตรวจสอบ'],['check in','สอบถามความคืบหน้า'],['accountable','รับผิดชอบตรวจสอบได้'],['ownership','ความเป็นเจ้าของงาน'],['hand off','ส่งต่องาน'],['supervise','กำกับดูแล'],['empower','ให้อำนาจตัดสินใจ']],'มอบหมายงาน 3 ชิ้นให้ทีมจำลอง'],
+[36,'p3','การสื่อสารข้ามแผนก',[['liaise','ประสานงาน'],['coordinate','ประสานงาน/จัดการ'],['align','ทำให้สอดคล้องกัน'],['collaborate','ร่วมมือกัน'],['cross-team','ข้ามทีม'],['sync up','อัปเดตร่วมกัน'],['streamline','ทำให้คล่องตัว'],['integrate','ผนวกรวม'],['consolidate','รวมเข้าด้วยกัน'],['communicate','สื่อสาร'],['loop in','ดึงเข้ามาร่วมรับรู้'],['bridge the gap','เชื่อมช่องว่าง'],['joint effort','ความพยายามร่วมกัน'],['shared goal','เป้าหมายร่วมกัน'],['touchpoint','จุดประสานงาน']],'อธิบายปัญหาข้ามทีม'],
+[37,'p3','ความเข้าใจเชิงวัฒนธรรมในการสื่อสาร',[['direct communication','การสื่อสารแบบตรง'],['indirect communication','การสื่อสารแบบอ้อม'],['cultural sensitivity','ความละเอียดอ่อนทางวัฒนธรรม'],['norm','บรรทัดฐาน'],['custom','ธรรมเนียมปฏิบัติ'],['etiquette','มารยาท'],['formal','เป็นทางการ'],['informal','ไม่เป็นทางการ'],['hierarchy','ลำดับชั้น'],['respect','ความเคารพ'],['adapt','ปรับตัว'],['awareness','ความตระหนักรู้'],['diverse','หลากหลาย'],['perspective','มุมมอง'],['nuance','ความละเอียดอ่อน']],'ปรับข้อความให้เหมาะกับวัฒนธรรมต่างๆ'],
+[38,'p3','การเดินทางและโลจิสติกส์เพื่อธุรกิจ',[['itinerary','กำหนดการเดินทาง'],['layover','การแวะพัก'],['visa','วีซ่า'],['boarding pass','บัตรผ่านขึ้นเครื่อง'],['check-in','เช็กอิน'],['departure','การออกเดินทาง'],['arrival','การมาถึง'],['connecting flight','เที่ยวบินต่อเครื่อง'],['business class','ชั้นธุรกิจ'],['accommodation','ที่พัก'],['reservation','การจอง'],['transportation','การเดินทาง'],['currency exchange','การแลกเงิน'],['customs','ด่านศุลกากร'],['jet lag','อาการเพลียจากการเดินทาง']],'บรรยายแผนทริปธุรกิจ'],
+[39,'p3','วิดีโอคอลกับทีมนานาชาติ',[['time zone','เขตเวลา'],['agenda circulation','การส่งวาระล่วงหน้า'],['dial-in','หมายเลขโทรเข้าร่วม'],['recording','การบันทึกการประชุม'],['minutes','รายงานการประชุม'],['attendee','ผู้เข้าร่วม'],['overlap','เวลาตรงกัน'],['convenient time','เวลาที่สะดวก'],['coordinate schedules','ประสานตารางเวลา'],['async','การสื่อสารแบบไม่พร้อมกัน'],['follow-up','การติดตามผล'],['action items','สิ่งที่ต้องทำต่อ'],['notes','บันทึกย่อ'],['share screen','แชร์หน้าจอ'],['mute/unmute','ปิด/เปิดไมค์']],'จำลอง check-in กับทีมทั่วโลก'],
+[40,'p3','อภิปรายกรณีศึกษา I',[['case study','กรณีศึกษา'],['scenario','สถานการณ์สมมติ'],['analyze','วิเคราะห์'],['evaluate','ประเมิน'],['alternative','ทางเลือกอื่น'],['outcome','ผลลัพธ์'],['implication','ผลกระทบที่ตามมา'],['stakeholder','ผู้มีส่วนได้ส่วนเสีย'],['assumption','ข้อสมมติ'],['evidence','หลักฐาน'],['justify','ให้เหตุผลสนับสนุน'],['critique','วิพากษ์วิจารณ์'],['insight','ข้อมูลเชิงลึก'],['recommendation','ข้อเสนอแนะ'],['lesson learned','บทเรียนที่ได้รับ']],'อภิปรายกรณีศึกษาธุรกิจสั้นๆ'],
+[41,'p3','สร้างข้อเสนอทางธุรกิจ',[['justify','ให้เหตุผลสนับสนุน'],['rationale','เหตุผลหลัก'],['ROI','ผลตอบแทนการลงทุน'],['business case','เหตุผลทางธุรกิจ'],['cost-benefit','ต้นทุนเทียบผลประโยชน์'],['investment','การลงทุน'],['projected return','ผลตอบแทนที่คาดการณ์'],['feasibility','ความเป็นไปได้'],['viability','ความยั่งยืนในทางปฏิบัติ'],['proposal','ข้อเสนอ'],['budget allocation','การจัดสรรงบประมาณ'],['approval','การอนุมัติ'],['executive summary','บทสรุปผู้บริหาร'],['risk assessment','การประเมินความเสี่ยง'],['timeline','กรอบเวลา']],'พิทช์ business case'],
+[42,'p3','รับมือการโต้แย้ง',[['however','อย่างไรก็ตาม'],['on the other hand','ในทางกลับกัน'],['objection','ข้อคัดค้าน'],['counterargument','ข้อโต้แย้งกลับ'],['concern','ข้อกังวล'],['address the concern','จัดการข้อกังวล'],['valid point','ประเด็นมีเหตุผล'],['respectfully disagree','ไม่เห็นด้วยอย่างสุภาพ'],['reconsider','พิจารณาใหม่'],['evidence','หลักฐาน'],['clarify','ชี้แจง'],['misunderstanding','ความเข้าใจผิด'],['common ground','จุดร่วม'],['compromise','ข้อตกลงร่วมกัน'],['resolve','คลี่คลาย']],'รับมือข้อโต้แย้งจำลอง'],
+[43,'p3','การเล่าเรื่องในธุรกิจ',[['narrative','เรื่องเล่า'],['anecdote','เกร็ดเรื่องเล่า'],['hook','จุดดึงดูดความสนใจ'],['context','บริบท'],['turning point','จุดเปลี่ยน'],['outcome','ผลลัพธ์'],['lesson','บทเรียน'],['relatable','เข้าถึงง่าย'],['engaging','น่าติดตาม'],['memorable','น่าจดจำ'],['storytelling','การเล่าเรื่อง'],['structure','โครงสร้าง'],['opening','ช่วงเปิดเรื่อง'],['climax','จุดไคลแมกซ์'],['takeaway','ประเด็นที่นำไปใช้ได้']],'เล่า anecdote ทางธุรกิจสั้นๆ'],
+[44,'p3','เจรจาต่อรองผ่านอีเมล',[['revised offer','ข้อเสนอที่ปรับปรุงแล้ว'],['terms and conditions','ข้อกำหนดและเงื่อนไข'],['counterproposal','ข้อเสนอโต้กลับ'],['finalize','สรุปเรียบร้อย'],['draft','ร่างเอกสาร'],['review','ทบทวน'],['amend','แก้ไขสัญญา'],['sign','ลงนาม'],['approve','อนุมัติ'],['pending approval','รอการอนุมัติ'],['confirm agreement','ยืนยันข้อตกลง'],['terms sheet','เอกสารสรุปเงื่อนไข'],['deadline for response','กำหนดเวลาตอบกลับ'],['mutual agreement','ข้อตกลงร่วมกัน'],['binding','มีผลผูกพัน']],'เขียน+พูดบทสนทนาเจรจาทางอีเมล'],
+[45,'p3','จำลองการประชุมเต็มรูปแบบ',null,'นำประชุมจำลอง 10 นาที (วิดีโอ)'],
+[46,'p3','จำลองพิทช์ลูกค้าเต็มรูปแบบ',null,'พิทช์สินค้า/บริการ + ตอบคำถามสด'],
+[47,'p3','สัปดาห์ทบทวน',null,'ทบทวนคำศัพท์+ไวยากรณ์สะสม ~3,500 คำ'],
+[48,'p3','ประเมิน Phase 3',null,'CEFR B1 mock test + วิดีโอรับมือสถานการณ์ลูกค้าที่ซับซ้อน'],
+
+[49,'p4','คำศัพท์เชิงกลยุทธ์เจาะลึก',[['leverage','ใช้ประโยชน์จาก'],['synergy','การทำงานร่วมกันเสริมพลัง'],['scalability','ความสามารถขยายตัว'],['mitigate','บรรเทา/ลดความเสี่ยง'],['bottleneck','จุดคอขวด'],['disrupt','เปลี่ยนแปลงพลิกโฉม'],['incentivize','สร้างแรงจูงใจ'],['streamline','ทำให้คล่องตัว'],['differentiate','สร้างความแตกต่าง'],['sustainable','ยั่งยืน'],['transparent','โปร่งใส'],['accountable','รับผิดชอบตรวจสอบได้'],['proactive','เชิงรุก'],['contingency','แผนสำรอง'],['viable','เป็นไปได้ในทางปฏิบัติ']],'บรรยายกลยุทธ์บริษัท'],
+[50,'p4','โครงสร้างการนำเสนอ',[['firstly / secondly','ประการแรก/ที่สอง'],['moving on','มาต่อกันที่'],['in conclusion','สรุปแล้ว'],['to summarize','สรุปโดยรวม'],['let me begin by','ขอเริ่มด้วย'],['turning to','มาดูที่'],['to illustrate','เพื่อยกตัวอย่าง'],['in other words','กล่าวอีกนัยหนึ่ง'],['to put it simply','พูดง่ายๆ คือ'],['agenda','วาระ'],['overview','ภาพรวม'],['key point','ประเด็นสำคัญ'],['transition','การเชื่อมประเด็น'],['recap','สรุปทบทวน'],['takeaway','ประเด็นที่ควรจำ']],'ออกแบบ+นำเสนอโครงสร้าง 3 นาที'],
+[51,'p4','การเล่าเรื่องด้วยข้อมูล/ภาพประกอบ',[['illustrate','ยกตัวอย่างให้เห็นภาพ'],['highlight','เน้นย้ำ'],['underscore','ตอกย้ำ'],['visualize','ทำให้เห็นภาพ'],['represent','แสดงถึง'],['depict','บรรยาย'],['showcase','นำเสนอเด่นชัด'],['emphasize','เน้น'],['demonstrate','แสดงให้เห็น'],['exemplify','เป็นตัวอย่างของ'],['chart','แผนภูมิ'],['graph','กราฟ'],['diagram','แผนภาพ'],['infographic','อินโฟกราฟิก'],['caption','คำบรรยายภาพ']],'นำเสนอสไลด์ (จำลอง) ด้วยเสียง'],
+[52,'p4','เทคนิครับมือคำถาม Q&A',[['great question','คำถามที่ดี'],['let me address that','ขออธิบาย'],['to build on that','ขอเสริม'],["I'll come back to that",'กลับมาตอบภายหลัง'],['to clarify','เพื่อให้ชัดเจน'],['in short','สรุปสั้นๆ'],['the short answer is','คำตอบสั้นๆคือ'],['let me elaborate','ขออธิบายเพิ่มเติม'],['follow-up question','คำถามต่อเนื่อง'],['off the top of my head','จากที่จำได้'],['no data right now','ยังไม่มีข้อมูลตอนนี้'],["I'll get back to you",'จะตอบกลับภายหลัง'],['take that offline','คุยรายละเอียดภายหลัง'],['good point','ประเด็นดี'],['fair question','คำถามที่สมเหตุสมผล']],'จำลอง Q&A หลังการนำเสนอ'],
+[53,'p4','กลยุทธ์และเทคนิคการเจรจา',[['BATNA','ทางเลือกดีที่สุดหากเจรจาไม่สำเร็จ'],['leverage point','จุดมีอำนาจต่อรอง'],['concession','การยอมผ่อนปรน'],['walk away','ยอมเลิกเจรจา'],['anchor','ตั้งข้อเสนอกำหนดกรอบ'],['opening offer','ข้อเสนอเริ่มต้น'],['reservation price','ราคาต่ำสุด/สูงสุดที่ยอมรับได้'],['zone of agreement','ช่วงที่ตกลงกันได้'],['trade-off','การแลกเปลี่ยนผลประโยชน์'],['package deal','ข้อเสนอแบบรวมชุด'],['deadlock','ภาวะเจรจาติดขัด'],['mutual benefit','ผลประโยชน์ร่วมกัน'],['negotiate in good faith','เจรจาด้วยความสุจริต'],['close the gap','ลดช่องว่าง'],['stalemate','ภาวะชะงักงัน']],'เจรจาหลายรอบจำลอง'],
+[54,'p4','บริหารความขัดแย้งอย่างมีชั้นเชิง',[['de-escalate','ลดความตึงเครียด'],['common ground','จุดร่วม'],['tension','ความตึงเครียด'],['conflict resolution','การคลี่คลายความขัดแย้ง'],['mediate','ไกล่เกลี่ย'],['empathize','เข้าใจความรู้สึกผู้อื่น'],['active listening','การฟังอย่างตั้งใจ'],['acknowledge','รับรู้/ยอมรับ'],['validate','ยืนยันว่าสมเหตุสมผล'],['defuse','คลี่คลายสถานการณ์'],['calm down','สงบสติอารมณ์'],['step back','ถอยกลับมาตั้งหลัก'],['neutral ground','พื้นที่เป็นกลาง'],['reconcile','ปรองดอง'],['perspective-taking','เข้าใจมุมมองผู้อื่น']],'คลี่คลายความขัดแย้งจำลอง'],
+[55,'p4','ปิดดีล',[['finalize','สรุปเรียบร้อย'],['sign off','อนุมัติลงนาม'],['terms sheet','เอกสารสรุปเงื่อนไข'],['close the deal','ปิดการเจรจาสำเร็จ'],['seal the deal','ปิดดีลเรียบร้อย'],['formalize','ทำให้เป็นทางการ'],['execute the contract','ลงนามสัญญาให้มีผล'],['handshake agreement','ข้อตกลงด้วยวาจา'],['final terms','เงื่อนไขสุดท้าย'],['confirm details','ยืนยันรายละเอียด'],['wrap up negotiations','สรุปปิดการเจรจา'],['move forward','เดินหน้าต่อ'],['commit','ให้คำมั่น'],['agreement in principle','ข้อตกลงในหลักการ'],['contract execution','การลงนามให้มีผล']],'ปิดการเจรจาจำลอง'],
+[56,'p4','การเจรจาเป็นลายลักษณ์อักษร (สัญญา)',[['contractual terms','เงื่อนไขตามสัญญา'],['shall / must','จะต้อง(ภาษาสัญญา)'],['obligation','ข้อผูกพัน'],['liability clause','ข้อสัญญาความรับผิด'],['indemnify','ชดใช้ค่าเสียหาย'],['breach of contract','การผิดสัญญา'],['terminate','ยกเลิกสัญญา'],['renew','ต่ออายุสัญญา'],['amendment','การแก้ไขเพิ่มเติม'],['governing law','กฎหมายที่ใช้บังคับ'],['force majeure','เหตุสุดวิสัย'],['confidentiality','การรักษาความลับ'],['binding agreement','ข้อตกลงมีผลผูกพัน'],['effective date','วันที่มีผล'],['party','คู่สัญญา']],'สรุปเงื่อนไขสัญญาด้วยเสียง'],
+[57,'p4','สร้างแรงบันดาลใจให้ทีม',[['inspire','สร้างแรงบันดาลใจ'],['empower','ให้อำนาจ'],['rally','รวมพลังกระตุ้นทีม'],['motivate','สร้างแรงจูงใจ'],['vision','วิสัยทัศน์'],['purpose','เป้าหมาย'],['commitment','ความมุ่งมั่น'],['drive','แรงขับเคลื่อน'],['passion','ความหลงใหล'],['encourage','ให้กำลังใจ'],['uplift','ยกระดับกำลังใจ'],['energize','สร้างพลังบวก'],['momentum','แรงส่งต่อเนื่อง'],['team spirit','จิตวิญญาณทีม'],['lead by example','นำโดยทำเป็นตัวอย่าง']],'กล่าวให้กำลังใจทีมสั้นๆ'],
+[58,'p4','ให้ Feedback เชิงสร้างสรรค์',[['constructive feedback','ข้อเสนอแนะเชิงสร้างสรรค์'],['strength','จุดแข็ง'],['area for improvement','จุดที่ควรพัฒนา'],['specific example','ตัวอย่างเจาะจง'],['actionable','นำไปปฏิบัติได้จริง'],['growth mindset','กรอบความคิดแบบเติบโต'],['acknowledge effort','ยอมรับความพยายาม'],['balanced feedback','ข้อเสนอแนะสมดุล'],['feedback sandwich','เทคนิคให้ feedback แบบแซนด์วิช'],['follow-up conversation','บทสนทนาติดตามผล'],['development plan','แผนพัฒนาตนเอง'],['coaching','การโค้ช'],['mentor','พี่เลี้ยง'],['praise','คำชม'],['guidance','คำแนะนำ']],'จำลองการให้ feedback'],
+[59,'p4','จัดการผลงานที่ต่ำกว่ามาตรฐาน',[['performance improvement plan','แผนปรับปรุงผลงาน'],['accountability','ความรับผิดชอบตรวจสอบได้'],['underperformance','ผลงานต่ำกว่ามาตรฐาน'],['expectation','ความคาดหวัง'],['benchmark','เกณฑ์เปรียบเทียบ'],['corrective action','มาตรการแก้ไข'],['documentation','การบันทึกเป็นลายลักษณ์อักษร'],['formal warning','หนังสือเตือน'],['support','การสนับสนุน'],['resources','ทรัพยากรช่วยเหลือ'],['timeline for improvement','กรอบเวลาปรับปรุง'],['check-in','การติดตามความคืบหน้า'],['progress review','การทบทวนความคืบหน้า'],['consequence','ผลที่ตามมา'],['turnaround','การพลิกฟื้นผลงาน']],'จำลองบทสนทนายาก'],
+[60,'p4','สื่อสารการเปลี่ยนแปลงองค์กร',[['transition','การเปลี่ยนผ่าน'],['restructure','ปรับโครงสร้าง'],['buy-in','การยอมรับสนับสนุน'],['change management','การบริหารการเปลี่ยนแปลง'],['transformation','การเปลี่ยนแปลงครั้งใหญ่'],['adapt','ปรับตัว'],['resistance','การต่อต้าน'],['communicate clearly','สื่อสารชัดเจน'],['reassure','ทำให้อุ่นใจ'],['timeline','กรอบเวลา'],['impact','ผลกระทบ'],['new structure','โครงสร้างใหม่'],['roles and responsibilities','บทบาทและความรับผิดชอบ'],['support system','ระบบสนับสนุน'],['transparency','ความโปร่งใส']],'ประกาศการเปลี่ยนแปลงองค์กร'],
+[61,'p4','พื้นฐานการสื่อสารในภาวะวิกฤต',[['contain','ควบคุมสถานการณ์'],['mitigate','บรรเทาผลกระทบ'],['statement','แถลงการณ์'],['crisis','วิกฤต'],['incident','เหตุการณ์'],['response plan','แผนรับมือ'],['stakeholder communication','การสื่อสารกับผู้มีส่วนได้ส่วนเสีย'],['transparency','ความโปร่งใส'],['timely update','การอัปเดตทันท่วงที'],['fact-based','อิงข้อเท็จจริง'],['reassure','ทำให้อุ่นใจ'],['damage control','การควบคุมความเสียหาย'],['accountability','ความรับผิดชอบ'],['next steps','ขั้นตอนถัดไป'],['resolution timeline','กรอบเวลาการแก้ไข']],'แถลงอัปเดตสถานการณ์วิกฤต'],
+[62,'p4','แถลงข่าวและข้อความสาธารณะ',[['press release','แถลงการณ์ข่าว'],['statement','คำแถลง'],['spokesperson','โฆษก'],['media inquiry','คำถามจากสื่อ'],['no comment','ไม่ขอแสดงความเห็น'],['official statement','แถลงการณ์เป็นทางการ'],['public relations','การประชาสัมพันธ์'],['headline','พาดหัวข่าว'],['quote','คำให้สัมภาษณ์'],['embargo','ข้อห้ามเผยแพร่ก่อนกำหนด'],['press conference','การแถลงข่าว'],['Q&A session','ช่วงถาม-ตอบ'],['media training','การฝึกรับมือสื่อ'],['key message','ข้อความหลัก'],['talking points','ประเด็นสำคัญที่เตรียมพูด']],'อ่าน/แถลงแถลงการณ์จำลอง'],
+[63,'p4','สื่อสารความสอดคล้องภายในองค์กร',[['cascade','ส่งต่อข้อมูลเป็นลำดับขั้น'],['align','ทำให้สอดคล้องกัน'],['buy-in','การยอมรับสนับสนุน'],['internal communication','การสื่อสารภายในองค์กร'],['town hall','การประชุมพนักงานทั้งองค์กร'],['all-hands meeting','การประชุมรวมทุกฝ่าย'],['consistent messaging','ข้อความตรงกันทุกช่องทาง'],['top-down','จากบนลงล่าง'],['bottom-up','จากล่างขึ้นบน'],['feedback loop','วงจรรับฟังความเห็น'],['engagement','การมีส่วนร่วม'],['clarity','ความชัดเจน'],['alignment','ความสอดคล้อง'],['roll out','เริ่มดำเนินการ'],['communicate updates','สื่อสารข้อมูลอัปเดต']],'อัปเดตข้อมูลข้ามทีมให้สอดคล้องกัน'],
+[64,'p4','อภิปรายกรณีศึกษา II (วิกฤต)',[['crisis case','กรณีศึกษาวิกฤต'],['root cause','สาเหตุที่แท้จริง'],['response','การตอบสนอง'],['aftermath','ผลกระทบภายหลัง'],['reputation','ชื่อเสียง'],['recovery','การฟื้นตัว'],['stakeholder impact','ผลกระทบต่อผู้มีส่วนได้ส่วนเสีย'],['lesson learned','บทเรียนที่ได้รับ'],['best practice','แนวปฏิบัติที่ดีที่สุด'],['preventive measure','มาตรการป้องกัน'],['protocol','ขั้นตอนปฏิบัติ'],['escalation path','ลำดับขั้นการยกระดับ'],['decision-making','การตัดสินใจ'],['hindsight','การมองย้อนกลับ'],['resilience','ความสามารถในการฟื้นตัว']],'อภิปรายและตอบสนองต่อกรณีศึกษาวิกฤต'],
+[65,'p4','พูดถึงผลประกอบการ',[['P&L','งบกำไรขาดทุน'],['margin','อัตรากำไร'],['EBITDA','กำไรก่อนหักดอกเบี้ย ภาษี ค่าเสื่อม'],['gross profit','กำไรขั้นต้น'],['net profit','กำไรสุทธิ'],['operating expense','ค่าใช้จ่ายดำเนินงาน'],['revenue growth','การเติบโตของรายได้'],['cost reduction','การลดต้นทุน'],['profitability','ความสามารถทำกำไร'],['financial health','สุขภาพทางการเงิน'],['quarter-over-quarter','เทียบไตรมาสต่อไตรมาส'],['year-over-year','เทียบปีต่อปี'],['fiscal year','ปีงบประมาณ'],['balance sheet','งบดุล'],['cash flow','กระแสเงินสด']],'อธิบายผลประกอบการ'],
+[66,'p4','การคาดการณ์และประมาณการ',[['project (v.)','คาดการณ์'],['anticipate','คาดหมาย'],['trend upward/downward','แนวโน้มขึ้น/ลง'],['forecast','การพยากรณ์'],['projection','การคาดการณ์ตัวเลข'],['estimate','การประมาณการ'],['assumption','ข้อสมมติ'],['scenario planning','การวางแผนตามสถานการณ์'],['best case','กรณีดีที่สุด'],['worst case','กรณีเลวร้ายที่สุด'],['likely outcome','ผลลัพธ์ที่น่าจะเป็น'],['market conditions','สภาวะตลาด'],['growth trajectory','ทิศทางการเติบโต'],['forward-looking','มองไปข้างหน้า'],['revise the forecast','ปรับปรุงการพยากรณ์']],'นำเสนอ forecast'],
+[67,'p4','ภาษาด้านความเสี่ยงและการกำกับดูแล',[['exposure','ความเสี่ยงที่เผชิญ'],['mitigate','บรรเทาความเสี่ยง'],['regulatory','เชิงกฎระเบียบ'],['compliance','การปฏิบัติตามกฎ'],['risk management','การบริหารความเสี่ยง'],['governance','การกำกับดูแลกิจการ'],['audit','การตรวจสอบบัญชี'],['due diligence','การตรวจสอบข้อมูลรอบคอบ'],['liability','ความรับผิด'],['risk appetite','ระดับความเสี่ยงที่ยอมรับได้'],['control measures','มาตรการควบคุม'],['oversight','การกำกับดูแล'],['policy','นโยบาย'],['regulation','กฎระเบียบ'],['non-compliance','การไม่ปฏิบัติตามกฎ']],'อธิบายสถานการณ์ความเสี่ยง'],
+[68,'p4','การสื่อสารกับนักลงทุน/บอร์ด',[['stakeholder value','คุณค่าต่อผู้มีส่วนได้ส่วนเสีย'],['governance','การกำกับดูแลกิจการ'],['investor relations','งานนักลงทุนสัมพันธ์'],['quarterly update','อัปเดตรายไตรมาส'],['board meeting','การประชุมคณะกรรมการ'],['shareholder','ผู้ถือหุ้น'],['dividend','เงินปันผล'],['performance metrics','ตัวชี้วัดผลการดำเนินงาน'],['strategic direction','ทิศทางเชิงกลยุทธ์'],['capital allocation','การจัดสรรเงินทุน'],['guidance','คำแนะนำแนวโน้มผลประกอบการ'],['outlook','มุมมองแนวโน้มอนาคต'],['transparency','ความโปร่งใส'],['accountability','ความรับผิดชอบ'],['fiduciary duty','หน้าที่เชิงทรัสต์']],'จำลองอัปเดตต่อบอร์ดบริหาร'],
+[69,'p4','จำลองการนำเสนอเต็มรูปแบบ',null,'นำเสนอ 10 นาที + Q&A'],
+[70,'p4','จำลองการเจรจาเต็มรูปแบบ',null,'เจรจาหลายรอบแบบสมจริง'],
+[71,'p4','สัปดาห์ทบทวน',null,'ทบทวนคำศัพท์+ไวยากรณ์สะสม ~5,000 คำ'],
+[72,'p4','ประเมิน Phase 4',null,'CEFR B2 mock test + วิดีโอสถานการณ์การสื่อสารแบบผู้นำ'],
+
+[73,'p5','สำนวนธุรกิจ I',[['move the needle','ทำให้เกิดผลกระทบที่วัดได้'],['low-hanging fruit','สิ่งที่ทำได้ง่ายเห็นผลเร็ว'],['circle back','กลับมาคุยอีกครั้ง'],['touch base','ติดต่อพูดคุยสั้นๆ'],['think outside the box','คิดนอกกรอบ'],['on the same page','เข้าใจตรงกัน'],['bandwidth','เวลา/กำลังที่มี'],['deep dive','การวิเคราะห์เชิงลึก'],['take it offline','คุยรายละเอียดภายหลัง'],['north star','เป้าหมายหลัก'],['game changer','สิ่งที่เปลี่ยนเกม'],['quick win','ผลสำเร็จที่ได้เร็ว'],['elephant in the room','ประเด็นสำคัญที่ไม่มีใครพูดถึง'],['move forward','เดินหน้าต่อ'],['silver bullet','ทางแก้ปัญหาสมบูรณ์แบบ']],'ใช้สำนวน 5 คำในบทสนทนาจำลอง'],
+[74,'p5','ความเชี่ยวชาญด้านโทนและระดับภาษา',[['formal register','ระดับภาษาทางการ'],['informal register','ระดับภาษาไม่ทางการ'],['tone','น้ำเสียง'],['nuance','ความละเอียดอ่อน'],['diplomatic language','ภาษาเชิงการทูต'],['softening','การพูดให้นุ่มนวลขึ้น'],['direct vs indirect','ตรง เทียบ อ้อม'],['professional tone','น้ำเสียงมืออาชีพ'],['casual tone','น้ำเสียงเป็นกันเอง'],['word choice','การเลือกใช้คำ'],['register shift','การเปลี่ยนระดับภาษา'],['appropriate','เหมาะสม'],['context-sensitive','คำนึงถึงบริบท'],['audience awareness','ความตระหนักถึงผู้ฟัง'],['adjust tone','ปรับน้ำเสียง']],'พูดข้อความเดียวกันใน 2 ระดับภาษา'],
+[75,'p5','ฝึกพูดโต้ตอบแบบด้นสด',[["that's an interesting question",'เป็นคำถามที่น่าสนใจ'],['let me think for a moment','ขอเวลาคิดสักครู่'],['off the cuff','พูดแบบไม่ได้เตรียมตัว'],['my initial thought is','ความคิดแรกของฉันคือ'],['to be honest','พูดตรงๆ'],['if I had to guess','ถ้าให้เดา'],['one way to look at it','มุมมองหนึ่งคือ'],['let me gather my thoughts','ขอเรียบเรียงความคิด'],['broadly speaking','พูดกว้างๆ'],["I'd need to double check",'ขอเช็กให้แน่ใจก่อน'],['roughly speaking','พูดคร่าวๆ'],['at a high level','ในภาพรวม'],['my gut feeling is','สัญชาตญาณบอกว่า'],['let me think out loud','ขอคิดออกมาดังๆ'],['to answer briefly','ตอบสั้นๆก่อน']],'ตอบคำถามธุรกิจ 10 ข้อแบบไม่เตรียมตัว'],
+[76,'p5','การเล่าเรื่องระดับผู้บริหาร',[['compelling narrative','เรื่องเล่าที่ทรงพลัง'],['strategic story','เรื่องเล่าเชิงกลยุทธ์'],['vision statement','ข้อความวิสัยทัศน์'],['legacy','มรดกที่ทิ้งไว้'],['pivotal moment','ช่วงเวลาสำคัญ'],['transformation story','เรื่องราวการเปลี่ยนแปลง'],['human element','องค์ประกอบด้านมนุษย์'],['data-driven story','เรื่องเล่าที่อิงข้อมูล'],['emotional appeal','การดึงอารมณ์ร่วม'],['credibility','ความน่าเชื่อถือ'],['authenticity','ความจริงใจ'],['call to action','การกระตุ้นให้ลงมือทำ'],['inspire action','สร้างแรงบันดาลใจให้ลงมือทำ'],['memorable close','บทสรุปที่น่าจดจำ'],['executive presence','บุคลิกภาพผู้นำ']],'เล่าเรื่องธุรกิจที่น่าจดจำ 2 นาที'],
+[77,'p5','เทคนิคการโน้มน้าวขั้นสูง',[['rhetorical device','กลวิธีเชิงวาทศิลป์'],['repetition for emphasis','การพูดซ้ำเพื่อเน้นย้ำ'],['rule of three','หลักการพูดเป็นชุดสาม'],['contrast','การเปรียบต่าง'],['analogy','การเปรียบเทียบให้เห็นภาพ'],['metaphor','อุปมาอุปไมย'],['rhetorical question','คำถามเชิงวาทศิลป์'],['appeal to logic','โน้มน้าวด้วยเหตุผล'],['appeal to emotion','โน้มน้าวด้วยอารมณ์'],['credibility (ethos)','ความน่าเชื่อถือของผู้พูด'],['persuasive language','ภาษาเชิงโน้มน้าว'],['call to action','การกระตุ้นให้ลงมือทำ'],['compelling argument','ข้อโต้แย้งที่น่าเชื่อถือ'],['framing','การจัดกรอบประเด็น'],['reframe','ปรับกรอบมุมมองใหม่']],'พิทช์โน้มน้าวโดยใช้เทคนิคเชิงวาทศิลป์'],
+[78,'p5','รับมือคำถามยาก/ท้าทาย',[['hostile question','คำถามเชิงท้าทาย'],['deflect','เบี่ยงประเด็น'],['redirect','เปลี่ยนทิศทางบทสนทนา'],['stay composed','รักษาความสงบ'],['acknowledge and pivot','ยอมรับแล้วเปลี่ยนประเด็น'],['factual response','คำตอบอิงข้อเท็จจริง'],['stick to the facts','ยึดตามข้อเท็จจริง'],['avoid speculation','หลีกเลี่ยงการคาดเดา'],['bridge back to key message','โยงกลับไปยังประเด็นหลัก'],['maintain composure','รักษาความสงบนิ่ง'],['defuse tension','คลี่คลายความตึงเครียด'],['respectful pushback','การโต้แย้งอย่างสุภาพ'],['hold your ground','ยืนหยัดในจุดยืน'],['agree to disagree','ตกลงที่จะเห็นต่างกัน'],['stay on message','ยึดประเด็นหลัก']],'จำลอง Q&A ที่ท้าทายจากสื่อ/บอร์ด'],
+[79,'p5','ความละเอียดอ่อนในการเจรจาข้ามวัฒนธรรม',[['cultural nuance','ความละเอียดอ่อนทางวัฒนธรรม'],['high-context culture','วัฒนธรรมสื่อสารแบบอ้อม'],['low-context culture','วัฒนธรรมสื่อสารตรงไปตรงมา'],['face-saving','การรักษาหน้า'],['indirect refusal','การปฏิเสธแบบอ้อม'],['relationship-building','การสร้างความสัมพันธ์'],['trust-building','การสร้างความไว้วางใจ'],['patience','ความอดทน'],['adapt approach','ปรับวิธีการ'],['read between the lines','อ่านนัยที่ซ่อนอยู่'],['non-verbal cues','สัญญาณที่ไม่ใช่คำพูด'],['silence as communication','ความเงียบที่สื่อความหมาย'],['hierarchy awareness','ความตระหนักถึงลำดับชั้น'],['formality level','ระดับความเป็นทางการ'],['cultural broker','ผู้ประสานความเข้าใจข้ามวัฒนธรรม']],'เจรจากับคู่เจรจาต่างชาติจำลอง'],
+[80,'p5','การไม่เห็นด้วยอย่างมีชั้นเชิง',[['diplomatic disagreement','การไม่เห็นด้วยอย่างมีชั้นเชิง'],['respectfully','ด้วยความเคารพ'],['I see it differently','ฉันมองต่างออกไป'],["let's agree to disagree",'ขอให้เห็นต่างกันได้'],['with all due respect','ด้วยความเคารพอย่างสูง'],['I understand, however','เข้าใจ แต่...'],['a different perspective','มุมมองที่แตกต่าง'],['food for thought','ประเด็นให้คิดต่อ'],["let's revisit this",'มาทบทวนกันอีกครั้ง'],["I'd push back on that",'ขอโต้แย้งประเด็นนั้น'],['gently challenge','ท้าทายอย่างนุ่มนวล'],['constructive dissent','การคัดค้านเชิงสร้างสรรค์'],["devil's advocate",'สมมติบทบาทค้านเพื่อทดสอบความคิด'],['tactful','มีชั้นเชิง'],['raise a counterpoint','เสนอประเด็นโต้แย้ง']],'ไม่เห็นด้วยกับผู้บริหารระดับสูงอย่างสุภาพ'],
+[81,'p5','การร่วมประชุมนานาชาติ',[['panel','คณะผู้ร่วมเสวนา'],['keynote','ปาฐกถาหลัก'],['moderate','ดำเนินรายการ'],['panelist','ผู้ร่วมเสวนา'],['session','ช่วงการประชุมย่อย'],['breakout room','ห้องประชุมกลุ่มย่อย'],['Q&A session','ช่วงถาม-ตอบ'],['plenary','การประชุมใหญ่รวม'],['conference','การประชุมขนาดใหญ่'],['delegate','ผู้แทนเข้าร่วม'],['audience engagement','การมีส่วนร่วมของผู้ฟัง'],['networking session','ช่วงสร้างเครือข่าย'],['closing remarks','คำกล่าวปิด'],['opening remarks','คำกล่าวเปิด'],['call for questions','การเปิดให้ถามคำถาม']],'จำลอง panel discussion'],
+[82,'p5','การสร้างเครือข่ายระดับผู้บริหาร',[['rapport','ความสัมพันธ์ที่ดี'],['elevator pitch','การแนะนำตัวสั้นๆ'],['follow-up connection','การติดต่อต่อเนื่อง'],['mutual connection','คนรู้จักร่วมกัน'],['business card exchange','การแลกนามบัตร'],['warm introduction','การแนะนำผ่านคนกลาง'],['cold outreach','การติดต่อโดยไม่รู้จักมาก่อน'],['relationship building','การสร้างความสัมพันธ์'],['common interest','ความสนใจร่วมกัน'],['memorable impression','ความประทับใจที่น่าจดจำ'],['follow-up email','อีเมลติดตามผล'],['stay in touch','รักษาการติดต่อ'],['professional network','เครือข่ายทางอาชีพ'],['introduce yourself','แนะนำตัวเอง'],['make a connection','สร้างความเชื่อมโยง']],'จำลองบทสนทนา networking 3 บท'],
+[83,'p5','การทำดีลข้ามพรมแดน',[['cross-border deal','ดีลข้ามพรมแดน'],['international regulation','กฎระเบียบระหว่างประเทศ'],['currency risk','ความเสี่ยงอัตราแลกเปลี่ยน'],['jurisdiction','เขตอำนาจศาล'],['local partner','พันธมิตรในพื้นที่'],['due diligence','การตรวจสอบข้อมูลรอบคอบ'],['regulatory approval','การอนุมัติจากหน่วยงานกำกับดูแล'],['cultural due diligence','การตรวจสอบความเข้ากันได้เชิงวัฒนธรรม'],['legal counsel','ที่ปรึกษากฎหมาย'],['tax implications','ผลกระทบด้านภาษี'],['market entry','การเข้าสู่ตลาดใหม่'],['joint venture','กิจการร่วมค้า'],['local compliance','การปฏิบัติตามกฎหมายท้องถิ่น'],['translation/interpretation','การแปล/การล่าม'],['global strategy','กลยุทธ์ระดับโลก']],'จำลองการเจรจาข้ามประเทศเต็มรูปแบบ'],
+[84,'p5','อภิปรายกรณีศึกษา III (การขยายธุรกิจ)',[['market entry strategy','กลยุทธ์การเข้าสู่ตลาด'],['expansion','การขยายกิจการ'],['scalability','ความสามารถขยายตัว'],['local adaptation','การปรับให้เข้ากับตลาดท้องถิ่น'],['competitive landscape','ภูมิทัศน์การแข่งขัน'],['risk-reward','ความเสี่ยงเทียบผลตอบแทน'],['first-mover advantage','ความได้เปรียบจากการเข้าตลาดก่อน'],['market research','การวิจัยตลาด'],['pilot program','โครงการนำร่อง'],['phased rollout','การเปิดตัวเป็นขั้นตอน'],['partnership model','รูปแบบความร่วมมือ'],['franchise','แฟรนไชส์'],['localization','การปรับให้เข้ากับท้องถิ่น'],['global brand','แบรนด์ระดับโลก'],['sustainable growth','การเติบโตอย่างยั่งยืน']],'อภิปรายและให้คำแนะนำต่อเคสขยายธุรกิจ'],
+[85,'p5','สำนวนและศัพท์แสลงธุรกิจ II',[['boil the ocean','พยายามทำทุกอย่างพร้อมกัน'],['herding cats','จัดการคนที่ควบคุมยาก'],['drinking from a firehose','ได้ข้อมูลมากเกินรับไหว'],['paralysis by analysis','วิเคราะห์มากจนตัดสินใจไม่ได้'],['best-in-class','ดีที่สุดในประเภท'],['blue sky thinking','คิดอย่างอิสระไม่มีข้อจำกัด'],['circle the wagons','รวมพลังป้องกันในยามวิกฤต'],['table stakes','สิ่งจำเป็นขั้นต่ำ'],['moving the goalposts','เปลี่ยนเป้าหมายกลางทาง'],['skin in the game','มีส่วนได้ส่วนเสียโดยตรง'],['under the radar','ไม่เป็นที่สังเกตเห็น'],['open the kimono','เปิดเผยข้อมูลภายในตรงไปตรงมา'],['pushing the envelope','ผลักดันขอบเขตให้ไกลขึ้น'],['in the weeds','จมกับรายละเอียดมากเกินไป'],['quick win (review)','ผลสำเร็จที่ได้เร็ว']],'ใช้สำนวนใหม่อย่างเป็นธรรมชาติในบทสนทนา'],
+[86,'p5','อารมณ์ขันและความสัมพันธ์ในธุรกิจ',[['light humor','อารมณ์ขันเบาๆ'],['icebreaker','มุกเปิดบทสนทนา'],['self-deprecating humor','มุกล้อตัวเอง'],['comedic timing','จังหวะการเล่ามุก'],['appropriate joke','มุกตลกที่เหมาะสม'],['read the room','อ่านบรรยากาศ'],['rapport-building','การสร้างความสัมพันธ์'],['warm up the audience','สร้างบรรยากาศผ่อนคลาย'],['playful tone','น้ำเสียงกึ่งล้อเล่น'],['banter','การพูดหยอกล้อกัน'],['witty remark','คำพูดมีไหวพริบ'],['cultural sensitivity in humor','ความระมัดระวังทางวัฒนธรรม'],['professional humor','อารมณ์ขันแบบมืออาชีพ'],['ease tension','ผ่อนคลายความตึงเครียด'],['relatable joke','มุกที่เข้าถึงคนฟังได้']],'เปิดประชุมด้วยมุกตลกที่เหมาะสม'],
+[87,'p5','ความเชี่ยวชาญการพูดแบบด้นสด (PREP Method)',null,'พูดด้นสด 5 นาทีในหัวข้อธุรกิจสุ่ม โดยใช้ PREP method (Point-Reason-Example-Point)'],
+[88,'p5','Q&A และการโต้วาทีขั้นสูง',[['debate','การโต้วาที'],['argument','ข้อโต้แย้ง'],['rebuttal','คำโต้กลับ'],['counterpoint','ประเด็นโต้แย้ง'],['concede a point','ยอมรับประเด็นฝ่ายตรงข้าม'],['strengthen your case','เสริมความหนักแน่นให้ข้อโต้แย้ง'],['weigh the evidence','ชั่งน้ำหนักหลักฐาน'],['logical fallacy','ความผิดพลาดเชิงตรรกะ'],['steelman','เสนอข้อโต้แย้งฝ่ายตรงข้ามแบบหนักแน่นที่สุด'],["devil's advocate",'สมมติบทบาทค้าน'],['moderator','ผู้ดำเนินรายการ'],['closing statement','คำกล่าวปิดท้าย'],['opening statement','คำกล่าวเปิด'],['persuasive closing','บทสรุปเชิงโน้มน้าว'],['structured argument','ข้อโต้แย้งมีโครงสร้างชัดเจน']],'จำลองการโต้วาทีหัวข้อธุรกิจ'],
+[89,'p5','จำลองการบรีฟผู้บริหารเต็มรูปแบบ',null,'บรีฟสถานการณ์ธุรกิจให้ผู้บริหารระดับสูงฟัง'],
+[90,'p5','จำลองวิกฤต + การสื่อสารกับบอร์ดเต็มรูปแบบ',null,'รับมือสถานการณ์วิกฤตแบบครบวงจร'],
+[91,'p5','ฝึกสนทนากับ mentor/เพื่อนเจ้าของภาษา',null,'บทสนทนาไม่มีสคริปต์กับผู้พูดภาษาอังกฤษเป็นภาษาแม่'],
+[92,'p5','สัปดาห์ทบทวน',null,'ทบทวนคำศัพท์และไวยากรณ์สะสมทั้งหมด'],
+[93,'p5','จำลองข้อสอบพูด CEFR C1',null,'mock speaking exam เต็มรูปแบบ'],
+[94,'p5','เตรียมการนำเสนอ Capstone สุดท้าย',null,'เตรียมเนื้อหาและซ้อมการนำเสนอ'],
+[95,'p5','Capstone สุดท้าย',null,'นำเสนอผู้บริหารเต็มรูปแบบ 10-15 นาที + Q&A (บันทึกและประเมินผล)'],
+[96,'p5','สรุปหลักสูตรและแผนรักษาความคล่องแคล่ว',null,'วางแผนรักษาระดับภาษาต่อเนื่อง (พูดกับเจ้าของภาษาประจำ, เสพสื่อธุรกิจภาษาอังกฤษ, ฝึกต่อเนื่องรายสัปดาห์)'],
+];
+function monthOfWeek(w){ return Math.ceil(w/4); }
+function phaseById(id){ return PHASES.find(p=>p.id===id); }
+function escapeHtml(s){ const d=document.createElement('div'); d.textContent=s||''; return d.innerHTML; }
+
+const app = document.getElementById('app');
+let search = '';
+let openMonth = null;
+
+function totalVocabCount(){
+  return WEEKS.reduce((sum,w)=> sum + (w[3] ? w[3].length : 0), 0);
+}
+
+function render(){
+  const q = search.trim().toLowerCase();
+  let filteredWeeks = WEEKS;
+  if(q){
+    filteredWeeks = WEEKS.filter(w=>{
+      const [num,phaseId,title,vocab,output] = w;
+      if(title.toLowerCase().includes(q) || output.toLowerCase().includes(q)) return true;
+      if(vocab) return vocab.some(v=> v[0].toLowerCase().includes(q) || v[1].includes(q));
+      return false;
+    });
+  }
+  const months = {};
+  filteredWeeks.forEach(w=>{ const m = Math.ceil(w[0]/4); (months[m]=months[m]||[]).push(w); });
+  const monthKeys = Object.keys(months).map(Number).sort((a,b)=>a-b);
+
+  app.innerHTML = `
+    <div class="hero">
+      <span class="mark">Executive English</span>
+      <h1>หลักสูตรภาษาอังกฤษผู้บริหาร 24 เดือน</h1>
+      <p>เส้นทางจากศูนย์ (A0) สู่ระดับ C1 — 5 ช่วง, 24 เดือน, 96 สัปดาห์ พร้อมคำศัพท์และสำนวนกว่า ${totalVocabCount().toLocaleString()} รายการ</p>
+      <div class="stats">
+        <div class="stat"><b>5</b>ช่วงหลักสูตร (Phase)</div>
+        <div class="stat"><b>24</b>เดือน</div>
+        <div class="stat"><b>96</b>สัปดาห์</div>
+        <div class="stat"><b>${totalVocabCount().toLocaleString()}+</b>คำศัพท์/สำนวน</div>
+      </div>
+    </div>
+
+    <div class="timeline">
+      ${PHASES.map(p=>`<div class="phase-row">
+        <div class="phase-num">${p.num}</div>
+        <div>
+          <div class="phase-title">${escapeHtml(p.title)} <span style="color:var(--slate);font-weight:400;font-size:0.82rem;">· ${escapeHtml(p.range)} · ${escapeHtml(p.level)}</span></div>
+          <div class="phase-focus">${p.focus.map(escapeHtml).join(' · ')}</div>
+        </div>
+      </div>`).join('')}
+    </div>
+
+    <h2 class="serif" style="font-size:1.25rem;margin-bottom:14px;">เนื้อหารายสัปดาห์ทั้งหมด</h2>
+    <input type="text" id="search-input" placeholder="ค้นหา เช่น negotiate, ประชุม, feedback..." value="${escapeHtml(search)}" style="margin-bottom:22px;">
+    <div id="months-container"></div>
+    <footer>Executive English Academy — หลักสูตรฉบับเต็ม</footer>
+  `;
+
+  const input = document.getElementById('search-input');
+  input.oninput = (e)=>{
+    search = e.target.value;
+    if(search.trim()) openMonth = '__all__';
+    const caret = e.target.selectionStart;
+    render();
+    const el = document.getElementById('search-input');
+    el.focus();
+    el.setSelectionRange(caret, caret);
+  };
+
+  const container = document.getElementById('months-container');
+  if(monthKeys.length===0){ container.innerHTML = '<div class="empty">ไม่พบผลลัพธ์ที่ตรงกับคำค้นหา</div>'; return; }
+
+  container.innerHTML = monthKeys.map(m=>{
+    const weeksInMonth = months[m];
+    const ph = phaseById(weeksInMonth[0][1]);
+    const isOpen = q ? true : (openMonth===m);
+    return `<div class="card">
+      <div class="month-header" data-month="${m}">
+        <div><span class="mh-title">เดือนที่ ${m}</span><span class="mh-sub">${escapeHtml(ph.title)} · ${escapeHtml(ph.level)}</span></div>
+        <span style="color:var(--slate);font-size:0.8rem;">${isOpen?'▲':'▼'}</span>
+      </div>
+      ${isOpen ? `<div class="month-body">${weeksInMonth.map(weekBlockHtml).join('')}</div>` : ''}
+    </div>`;
+  }).join('');
+
+  document.querySelectorAll('.month-header').forEach(h=>{
+    h.onclick = ()=>{
+      const m = +h.dataset.month;
+      openMonth = (openMonth===m) ? null : m;
+      render();
+    };
+  });
+}
+
+function weekBlockHtml(w){
+  const [num,phaseId,title,vocab,output] = w;
+  return `<div class="week-block">
+    <div class="week-title">สัปดาห์ ${num} — ${escapeHtml(title)}</div>
+    <div class="week-output">Output: ${escapeHtml(output)}</div>
+    ${vocab ? `<div class="grid">${vocab.map(v=>`<div class="vocab-item"><b>${escapeHtml(v[0])}</b> — ${escapeHtml(v[1])}</div>`).join('')}</div>` : ''}
+  </div>`;
+}
+
+render();
+</script>
+</body>
+</html>
